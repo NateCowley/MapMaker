@@ -1,0 +1,20 @@
+A:\Documents\Visual Studio 2019\Projects\MapMaker\bin\Debug\MapMaker.exe.config
+A:\Documents\Visual Studio 2019\Projects\MapMaker\bin\Debug\MapMaker.exe
+A:\Documents\Visual Studio 2019\Projects\MapMaker\bin\Debug\MapMaker.pdb
+A:\Documents\Visual Studio 2019\Projects\MapMaker\obj\Debug\MapMaker.csprojAssemblyReference.cache
+A:\Documents\Visual Studio 2019\Projects\MapMaker\obj\Debug\MapMaker.Properties.Resources.resources
+A:\Documents\Visual Studio 2019\Projects\MapMaker\obj\Debug\MapMaker.csproj.GenerateResource.cache
+A:\Documents\Visual Studio 2019\Projects\MapMaker\obj\Debug\MapMaker.exe
+A:\Documents\Visual Studio 2019\Projects\MapMaker\obj\Debug\MapMaker.pdb
+A:\Documents\Visual Studio 2019\Projects\MapMaker\obj\Debug\MapMaker.mainWindow.resources
+A:\Documents\Visual Studio 2019\Projects\MapMaker\obj\Debug\MapMaker.ProgressForm.resources
+A:\VisualStudio\MapMaker\bin\Debug\MapMaker.exe.config
+A:\VisualStudio\MapMaker\bin\Debug\MapMaker.exe
+A:\VisualStudio\MapMaker\bin\Debug\MapMaker.pdb
+A:\VisualStudio\MapMaker\obj\Debug\MapMaker.csprojAssemblyReference.cache
+A:\VisualStudio\MapMaker\obj\Debug\MapMaker.mainWindow.resources
+A:\VisualStudio\MapMaker\obj\Debug\MapMaker.ProgressForm.resources
+A:\VisualStudio\MapMaker\obj\Debug\MapMaker.Properties.Resources.resources
+A:\VisualStudio\MapMaker\obj\Debug\MapMaker.csproj.GenerateResource.cache
+A:\VisualStudio\MapMaker\obj\Debug\MapMaker.exe
+A:\VisualStudio\MapMaker\obj\Debug\MapMaker.pdb
