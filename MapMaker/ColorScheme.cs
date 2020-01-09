@@ -14,6 +14,7 @@ namespace MapMaker
 		DEFAULTTOPO,
 		SEPIATOPO,
 		BLACKANDWHITE,
+		DESERT,
 	}
 
 	public struct ColorValue
@@ -46,33 +47,47 @@ namespace MapMaker
 
 		public static ColorValue[] defaultRange =
 		{
-			new ColorValue(.09, Color.FromArgb(0, 0, 128)), // deeps
-			new ColorValue(.21, Color.FromArgb(0, 0, 191)), // mid
-			new ColorValue(.39, Color.FromArgb(0, 0, 255)), // shallows
-			new ColorValue(.45, Color.FromArgb(0, 128, 255)), // shore
+			new ColorValue(.09, Color.FromArgb(000, 000, 128)), // deeps
+			new ColorValue(.21, Color.FromArgb(000, 000, 191)), // mid
+			new ColorValue(.39, Color.FromArgb(000, 000, 255)), // shallows
+			new ColorValue(.45, Color.FromArgb(000, 128, 255)), // shore
 			new ColorValue(.51, Color.FromArgb(255, 255, 153)), // sand
-			new ColorValue(.69, Color.FromArgb(32, 160, 0)), // grass
-			new ColorValue(.79, Color.FromArgb(153, 102, 51)), // dirt
+			new ColorValue(.69, Color.FromArgb(032, 160, 000)), // grass
+			new ColorValue(.79, Color.FromArgb(153, 102, 051)), // dirt
 			new ColorValue(.89, Color.FromArgb(128, 128, 128)), // rock
-			new ColorValue(.99, Color.FromArgb(255, 255, 255)) // snow
+			new ColorValue(.99, Color.FromArgb(255, 255, 255))  // snow
 		};
 
 		public static ColorValue[] sepiaDefaultRange =
 		{
-			new ColorValue(.57, Color.FromArgb(208, 150, 92)), //  water
-			new ColorValue(.59, Color.FromArgb(128, 69, 29)), // shoreline
-			new ColorValue(.62, Color.FromArgb(233, 193, 132)), // land
+			new ColorValue(.570, Color.FromArgb(208, 150, 092)), // water
+			new ColorValue(.590, Color.FromArgb(128, 069, 029)), // shoreline
+			new ColorValue(.620, Color.FromArgb(233, 193, 132)), // land
 		};
 
 		public static ColorValue[] blackAndWhiteRange =
 		{
-			new ColorValue(.001, Color.FromArgb(0, 0, 0)), // deep water
-			new ColorValue(.25, Color.FromArgb(43, 43, 43)), //  water
-			new ColorValue(.4, Color.FromArgb(79, 79, 79)), //  water
-			new ColorValue(.5, Color.FromArgb(128, 128, 128)), // shoreline
-			new ColorValue(.6, Color.FromArgb(166, 166, 166)), // land
-			new ColorValue(.75, Color.FromArgb(209, 209, 209)), // deeper land
-			new ColorValue(.999, Color.FromArgb(255, 255, 255)) // deeper land
+			new ColorValue(.001, Color.FromArgb(000, 000, 000)), // deep water
+			new ColorValue(.250, Color.FromArgb(043, 043, 043)), // water
+			new ColorValue(.400, Color.FromArgb(079, 079, 079)), // water
+			new ColorValue(.500, Color.FromArgb(128, 128, 128)), // shoreline
+			new ColorValue(.600, Color.FromArgb(166, 166, 166)), // land
+			new ColorValue(.750, Color.FromArgb(209, 209, 209)), // deeper land
+			new ColorValue(.999, Color.FromArgb(255, 255, 255))  // deeper land
+		};
+
+		// any row with "+" at the end is simply a darker version
+		public static ColorValue[] desertRange = 
+		{
+			new ColorValue(.090, Color.FromArgb(000, 000, 255)), // water
+			new ColorValue(.210, Color.FromArgb(000, 128, 255)), // shallow water
+			new ColorValue(.390, Color.FromArgb(255, 255, 153)), // shoreline
+			new ColorValue(.450, Color.FromArgb(232, 232, 139)), // light sand
+			new ColorValue(.510, Color.FromArgb(232, 203, 139)), // light sand +
+			new ColorValue(.690, Color.FromArgb(212, 176, 119)), // sand
+			new ColorValue(.790, Color.FromArgb(181, 142, 080)), // sand +
+			new ColorValue(.890, Color.FromArgb(150, 112, 050)), // 
+			new ColorValue(.990, Color.FromArgb(084, 062, 027))  // snow
 		};
 
 		public static Color getColorFromValue(double value, ColorTone ct, int gradientClarity)
@@ -95,6 +110,9 @@ namespace MapMaker
 					break;
 				case ColorTone.BLACKANDWHITE:
 					scheme = blackAndWhiteRange;
+					break;
+				case ColorTone.DESERT:
+					scheme = desertRange;
 					break;
 			}
 

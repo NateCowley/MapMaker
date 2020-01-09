@@ -58,7 +58,6 @@
 			this.continentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.plainsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.mountainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.desertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.xOffsetLabel = new System.Windows.Forms.Label();
 			this.xOffsetTB = new System.Windows.Forms.TextBox();
 			this.yOffsetLabel = new System.Windows.Forms.Label();
@@ -72,6 +71,7 @@
 			this.clarityTB = new System.Windows.Forms.TextBox();
 			this.lacunarityLabel = new System.Windows.Forms.Label();
 			this.lacunarityTB = new System.Windows.Forms.TextBox();
+			this.desertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.mapImagePB)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -81,18 +81,20 @@
 			this.mapImagePB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.mapImagePB.Location = new System.Drawing.Point(229, 27);
+			this.mapImagePB.Location = new System.Drawing.Point(305, 33);
+			this.mapImagePB.Margin = new System.Windows.Forms.Padding(4);
 			this.mapImagePB.Name = "mapImagePB";
-			this.mapImagePB.Size = new System.Drawing.Size(620, 503);
+			this.mapImagePB.Size = new System.Drawing.Size(827, 619);
 			this.mapImagePB.TabIndex = 0;
 			this.mapImagePB.TabStop = false;
 			this.mapImagePB.Click += new System.EventHandler(this.pictureBox1_Click);
 			// 
 			// generateButton
 			// 
-			this.generateButton.Location = new System.Drawing.Point(11, 468);
+			this.generateButton.Location = new System.Drawing.Point(15, 576);
+			this.generateButton.Margin = new System.Windows.Forms.Padding(4);
 			this.generateButton.Name = "generateButton";
-			this.generateButton.Size = new System.Drawing.Size(211, 28);
+			this.generateButton.Size = new System.Drawing.Size(281, 34);
 			this.generateButton.TabIndex = 2;
 			this.generateButton.Text = "Generate";
 			this.generateButton.UseVisualStyleBackColor = true;
@@ -100,19 +102,22 @@
 			// 
 			// octaveTB
 			// 
-			this.octaveTB.Location = new System.Drawing.Point(11, 46);
+			this.octaveTB.Location = new System.Drawing.Point(15, 57);
+			this.octaveTB.Margin = new System.Windows.Forms.Padding(4);
 			this.octaveTB.Name = "octaveTB";
-			this.octaveTB.Size = new System.Drawing.Size(211, 20);
+			this.octaveTB.Size = new System.Drawing.Size(280, 22);
 			this.octaveTB.TabIndex = 3;
 			this.octaveTB.Text = "8";
 			this.toolTip1.SetToolTip(this.octaveTB, resources.GetString("octaveTB.ToolTip"));
+			this.octaveTB.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.checkEnterDown);
 			// 
 			// octaveLabel
 			// 
 			this.octaveLabel.AutoSize = true;
-			this.octaveLabel.Location = new System.Drawing.Point(12, 27);
+			this.octaveLabel.Location = new System.Drawing.Point(16, 33);
+			this.octaveLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.octaveLabel.Name = "octaveLabel";
-			this.octaveLabel.Size = new System.Drawing.Size(47, 13);
+			this.octaveLabel.Size = new System.Drawing.Size(60, 17);
 			this.octaveLabel.TabIndex = 4;
 			this.octaveLabel.Text = "Octaves";
 			this.toolTip1.SetToolTip(this.octaveLabel, resources.GetString("octaveLabel.ToolTip"));
@@ -120,9 +125,10 @@
 			// frequencyLabel
 			// 
 			this.frequencyLabel.AutoSize = true;
-			this.frequencyLabel.Location = new System.Drawing.Point(12, 69);
+			this.frequencyLabel.Location = new System.Drawing.Point(16, 85);
+			this.frequencyLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.frequencyLabel.Name = "frequencyLabel";
-			this.frequencyLabel.Size = new System.Drawing.Size(57, 13);
+			this.frequencyLabel.Size = new System.Drawing.Size(75, 17);
 			this.frequencyLabel.TabIndex = 6;
 			this.frequencyLabel.Text = "Frequency";
 			this.toolTip1.SetToolTip(this.frequencyLabel, "Frequency determines how many changes occur across \r\nthe map. Higher values incre" +
@@ -130,35 +136,41 @@
 			// 
 			// frequencyTB
 			// 
-			this.frequencyTB.Location = new System.Drawing.Point(11, 88);
+			this.frequencyTB.Location = new System.Drawing.Point(15, 108);
+			this.frequencyTB.Margin = new System.Windows.Forms.Padding(4);
 			this.frequencyTB.Name = "frequencyTB";
-			this.frequencyTB.Size = new System.Drawing.Size(211, 20);
+			this.frequencyTB.Size = new System.Drawing.Size(280, 22);
 			this.frequencyTB.TabIndex = 5;
 			this.frequencyTB.Text = "16";
 			this.toolTip1.SetToolTip(this.frequencyTB, "Frequency determines how many changes occur across \r\nthe map. Higher values incre" +
         "ase the number of changes.\r\n\r\nThe typical range for frequency is 1 to 16.\r\n");
+			this.frequencyTB.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.checkEnterDown);
 			// 
 			// seedLabel
 			// 
 			this.seedLabel.AutoSize = true;
-			this.seedLabel.Location = new System.Drawing.Point(12, 279);
+			this.seedLabel.Location = new System.Drawing.Point(16, 343);
+			this.seedLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.seedLabel.Name = "seedLabel";
-			this.seedLabel.Size = new System.Drawing.Size(32, 13);
+			this.seedLabel.Size = new System.Drawing.Size(41, 17);
 			this.seedLabel.TabIndex = 10;
 			this.seedLabel.Text = "Seed";
 			// 
 			// seedTB
 			// 
-			this.seedTB.Location = new System.Drawing.Point(11, 298);
+			this.seedTB.Location = new System.Drawing.Point(15, 367);
+			this.seedTB.Margin = new System.Windows.Forms.Padding(4);
 			this.seedTB.Name = "seedTB";
-			this.seedTB.Size = new System.Drawing.Size(211, 20);
+			this.seedTB.Size = new System.Drawing.Size(280, 22);
 			this.seedTB.TabIndex = 9;
+			this.seedTB.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.checkEnterDown);
 			// 
 			// generateRandomSeedButton
 			// 
-			this.generateRandomSeedButton.Location = new System.Drawing.Point(11, 502);
+			this.generateRandomSeedButton.Location = new System.Drawing.Point(15, 618);
+			this.generateRandomSeedButton.Margin = new System.Windows.Forms.Padding(4);
 			this.generateRandomSeedButton.Name = "generateRandomSeedButton";
-			this.generateRandomSeedButton.Size = new System.Drawing.Size(211, 28);
+			this.generateRandomSeedButton.Size = new System.Drawing.Size(281, 34);
 			this.generateRandomSeedButton.TabIndex = 15;
 			this.generateRandomSeedButton.Text = "Generate (Random Seed)";
 			this.generateRandomSeedButton.UseVisualStyleBackColor = true;
@@ -166,6 +178,7 @@
 			// 
 			// menuStrip1
 			// 
+			this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.colorSchemeToolStripMenuItem,
@@ -173,7 +186,8 @@
             this.biomeToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(861, 24);
+			this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
+			this.menuStrip1.Size = new System.Drawing.Size(1148, 28);
 			this.menuStrip1.TabIndex = 19;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -185,31 +199,31 @@
             this.saveMapToolStripMenuItem,
             this.saveMapAsToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+			this.fileToolStripMenuItem.Size = new System.Drawing.Size(44, 24);
 			this.fileToolStripMenuItem.Text = "File";
 			// 
 			// saveToolStripMenuItem
 			// 
 			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-			this.saveToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+			this.saveToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
 			this.saveToolStripMenuItem.Text = "Save Settings";
 			// 
 			// saveAsToolStripMenuItem
 			// 
 			this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
 			this.saveAsToolStripMenuItem.Text = "Save Settings As...";
 			// 
 			// saveMapToolStripMenuItem
 			// 
 			this.saveMapToolStripMenuItem.Name = "saveMapToolStripMenuItem";
-			this.saveMapToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+			this.saveMapToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
 			this.saveMapToolStripMenuItem.Text = "Save Map";
 			// 
 			// saveMapAsToolStripMenuItem
 			// 
 			this.saveMapAsToolStripMenuItem.Name = "saveMapAsToolStripMenuItem";
-			this.saveMapAsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+			this.saveMapAsToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
 			this.saveMapAsToolStripMenuItem.Text = "Save Map As...";
 			// 
 			// colorSchemeToolStripMenuItem
@@ -217,9 +231,10 @@
 			this.colorSchemeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.defaultColorSchemeToolStripMenuItem,
             this.sepiaToolStripMenuItem,
-            this.blackAndWhiteToolStripMenuItem});
+            this.blackAndWhiteToolStripMenuItem,
+            this.desertToolStripMenuItem});
 			this.colorSchemeToolStripMenuItem.Name = "colorSchemeToolStripMenuItem";
-			this.colorSchemeToolStripMenuItem.Size = new System.Drawing.Size(93, 20);
+			this.colorSchemeToolStripMenuItem.Size = new System.Drawing.Size(113, 24);
 			this.colorSchemeToolStripMenuItem.Text = "Color Scheme";
 			// 
 			// defaultColorSchemeToolStripMenuItem
@@ -227,21 +242,21 @@
 			this.defaultColorSchemeToolStripMenuItem.Checked = true;
 			this.defaultColorSchemeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.defaultColorSchemeToolStripMenuItem.Name = "defaultColorSchemeToolStripMenuItem";
-			this.defaultColorSchemeToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+			this.defaultColorSchemeToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
 			this.defaultColorSchemeToolStripMenuItem.Text = "Default";
 			this.defaultColorSchemeToolStripMenuItem.Click += new System.EventHandler(this.defaultToolStripMenuItem_Click);
 			// 
 			// sepiaToolStripMenuItem
 			// 
 			this.sepiaToolStripMenuItem.Name = "sepiaToolStripMenuItem";
-			this.sepiaToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+			this.sepiaToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
 			this.sepiaToolStripMenuItem.Text = "Sepia";
 			this.sepiaToolStripMenuItem.Click += new System.EventHandler(this.sepiaToolStripMenuItem_Click);
 			// 
 			// blackAndWhiteToolStripMenuItem
 			// 
 			this.blackAndWhiteToolStripMenuItem.Name = "blackAndWhiteToolStripMenuItem";
-			this.blackAndWhiteToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+			this.blackAndWhiteToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
 			this.blackAndWhiteToolStripMenuItem.Text = "Black and White";
 			this.blackAndWhiteToolStripMenuItem.Click += new System.EventHandler(this.blackAndWhiteToolStripMenuItem_Click);
 			// 
@@ -252,7 +267,7 @@
             this.simplexNoiseToolStripMenuItem,
             this.worleyNoiseToolStripMenuItem});
 			this.noiseGeneratorToolStripMenuItem.Name = "noiseGeneratorToolStripMenuItem";
-			this.noiseGeneratorToolStripMenuItem.Size = new System.Drawing.Size(104, 20);
+			this.noiseGeneratorToolStripMenuItem.Size = new System.Drawing.Size(129, 24);
 			this.noiseGeneratorToolStripMenuItem.Text = "Noise Generator";
 			// 
 			// improvedNoiseToolStripMenuItem
@@ -260,21 +275,21 @@
 			this.improvedNoiseToolStripMenuItem.Checked = true;
 			this.improvedNoiseToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.improvedNoiseToolStripMenuItem.Name = "improvedNoiseToolStripMenuItem";
-			this.improvedNoiseToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+			this.improvedNoiseToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
 			this.improvedNoiseToolStripMenuItem.Text = "Improved Noise";
 			this.improvedNoiseToolStripMenuItem.Click += new System.EventHandler(this.improvedNoiseToolStripMenuItem_Click);
 			// 
 			// simplexNoiseToolStripMenuItem
 			// 
 			this.simplexNoiseToolStripMenuItem.Name = "simplexNoiseToolStripMenuItem";
-			this.simplexNoiseToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+			this.simplexNoiseToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
 			this.simplexNoiseToolStripMenuItem.Text = "Simplex Noise";
 			this.simplexNoiseToolStripMenuItem.Click += new System.EventHandler(this.simplexeNoiseToolStripMenuItem_Click);
 			// 
 			// worleyNoiseToolStripMenuItem
 			// 
 			this.worleyNoiseToolStripMenuItem.Name = "worleyNoiseToolStripMenuItem";
-			this.worleyNoiseToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+			this.worleyNoiseToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
 			this.worleyNoiseToolStripMenuItem.Text = "Worley Noise";
 			this.worleyNoiseToolStripMenuItem.Click += new System.EventHandler(this.worleyNoiseToolStripMenuItem_Click);
 			// 
@@ -284,10 +299,9 @@
             this.customToolStripMenuItem,
             this.continentsToolStripMenuItem,
             this.plainsToolStripMenuItem,
-            this.mountainToolStripMenuItem,
-            this.desertToolStripMenuItem});
+            this.mountainToolStripMenuItem});
 			this.biomeToolStripMenuItem.Name = "biomeToolStripMenuItem";
-			this.biomeToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
+			this.biomeToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
 			this.biomeToolStripMenuItem.Text = "Biome";
 			// 
 			// customToolStripMenuItem
@@ -295,78 +309,78 @@
 			this.customToolStripMenuItem.Checked = true;
 			this.customToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.customToolStripMenuItem.Name = "customToolStripMenuItem";
-			this.customToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.customToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.customToolStripMenuItem.Text = "Default";
 			this.customToolStripMenuItem.Click += new System.EventHandler(this.customToolStripMenuItem_Click);
 			// 
 			// continentsToolStripMenuItem
 			// 
 			this.continentsToolStripMenuItem.Name = "continentsToolStripMenuItem";
-			this.continentsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.continentsToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.continentsToolStripMenuItem.Text = "Continents";
 			this.continentsToolStripMenuItem.Click += new System.EventHandler(this.continentsToolStripMenuItem_Click);
 			// 
 			// plainsToolStripMenuItem
 			// 
 			this.plainsToolStripMenuItem.Name = "plainsToolStripMenuItem";
-			this.plainsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.plainsToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.plainsToolStripMenuItem.Text = "Plains";
 			this.plainsToolStripMenuItem.Click += new System.EventHandler(this.plainsToolStripMenuItem_Click);
 			// 
 			// mountainToolStripMenuItem
 			// 
 			this.mountainToolStripMenuItem.Name = "mountainToolStripMenuItem";
-			this.mountainToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.mountainToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.mountainToolStripMenuItem.Text = "Mountains";
 			this.mountainToolStripMenuItem.Click += new System.EventHandler(this.mountainToolStripMenuItem_Click);
-			// 
-			// desertToolStripMenuItem
-			// 
-			this.desertToolStripMenuItem.Name = "desertToolStripMenuItem";
-			this.desertToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.desertToolStripMenuItem.Text = "Desert";
-			this.desertToolStripMenuItem.Click += new System.EventHandler(this.desertToolStripMenuItem_Click);
 			// 
 			// xOffsetLabel
 			// 
 			this.xOffsetLabel.AutoSize = true;
-			this.xOffsetLabel.Location = new System.Drawing.Point(12, 321);
+			this.xOffsetLabel.Location = new System.Drawing.Point(16, 395);
+			this.xOffsetLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.xOffsetLabel.Name = "xOffsetLabel";
-			this.xOffsetLabel.Size = new System.Drawing.Size(45, 13);
+			this.xOffsetLabel.Size = new System.Drawing.Size(59, 17);
 			this.xOffsetLabel.TabIndex = 21;
 			this.xOffsetLabel.Text = "X Offset";
 			// 
 			// xOffsetTB
 			// 
-			this.xOffsetTB.Location = new System.Drawing.Point(11, 340);
+			this.xOffsetTB.Location = new System.Drawing.Point(15, 418);
+			this.xOffsetTB.Margin = new System.Windows.Forms.Padding(4);
 			this.xOffsetTB.Name = "xOffsetTB";
-			this.xOffsetTB.Size = new System.Drawing.Size(211, 20);
+			this.xOffsetTB.Size = new System.Drawing.Size(280, 22);
 			this.xOffsetTB.TabIndex = 20;
 			this.xOffsetTB.Text = "0";
+			this.xOffsetTB.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.checkEnterDown);
 			// 
 			// yOffsetLabel
 			// 
 			this.yOffsetLabel.AutoSize = true;
-			this.yOffsetLabel.Location = new System.Drawing.Point(12, 363);
+			this.yOffsetLabel.Location = new System.Drawing.Point(16, 447);
+			this.yOffsetLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.yOffsetLabel.Name = "yOffsetLabel";
-			this.yOffsetLabel.Size = new System.Drawing.Size(45, 13);
+			this.yOffsetLabel.Size = new System.Drawing.Size(59, 17);
 			this.yOffsetLabel.TabIndex = 23;
 			this.yOffsetLabel.Text = "Y Offset";
 			// 
 			// yOffsetTB
 			// 
-			this.yOffsetTB.Location = new System.Drawing.Point(11, 382);
+			this.yOffsetTB.Location = new System.Drawing.Point(15, 470);
+			this.yOffsetTB.Margin = new System.Windows.Forms.Padding(4);
 			this.yOffsetTB.Name = "yOffsetTB";
-			this.yOffsetTB.Size = new System.Drawing.Size(211, 20);
+			this.yOffsetTB.Size = new System.Drawing.Size(280, 22);
 			this.yOffsetTB.TabIndex = 22;
 			this.yOffsetTB.Text = "0";
+			this.yOffsetTB.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.checkEnterDown);
 			// 
 			// persistenceLabel
 			// 
 			this.persistenceLabel.AutoSize = true;
-			this.persistenceLabel.Location = new System.Drawing.Point(12, 153);
+			this.persistenceLabel.Location = new System.Drawing.Point(16, 188);
+			this.persistenceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.persistenceLabel.Name = "persistenceLabel";
-			this.persistenceLabel.Size = new System.Drawing.Size(62, 13);
+			this.persistenceLabel.Size = new System.Drawing.Size(82, 17);
 			this.persistenceLabel.TabIndex = 30;
 			this.persistenceLabel.Text = "Persistence";
 			this.toolTip1.SetToolTip(this.persistenceLabel, "how much the small features affect the map\r\n\r\nThe typical range for octaves is 1 " +
@@ -374,20 +388,23 @@
 			// 
 			// persistenceTB
 			// 
-			this.persistenceTB.Location = new System.Drawing.Point(11, 172);
+			this.persistenceTB.Location = new System.Drawing.Point(15, 212);
+			this.persistenceTB.Margin = new System.Windows.Forms.Padding(4);
 			this.persistenceTB.Name = "persistenceTB";
-			this.persistenceTB.Size = new System.Drawing.Size(211, 20);
+			this.persistenceTB.Size = new System.Drawing.Size(280, 22);
 			this.persistenceTB.TabIndex = 29;
 			this.persistenceTB.Text = "0.35";
 			this.toolTip1.SetToolTip(this.persistenceTB, "how much the small features affect the map\r\n\r\nThe typical range for octaves is 1 " +
         "to 8.");
+			this.persistenceTB.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.checkEnterDown);
 			// 
 			// scaleLabel
 			// 
 			this.scaleLabel.AutoSize = true;
-			this.scaleLabel.Location = new System.Drawing.Point(12, 195);
+			this.scaleLabel.Location = new System.Drawing.Point(16, 240);
+			this.scaleLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.scaleLabel.Name = "scaleLabel";
-			this.scaleLabel.Size = new System.Drawing.Size(34, 13);
+			this.scaleLabel.Size = new System.Drawing.Size(43, 17);
 			this.scaleLabel.TabIndex = 32;
 			this.scaleLabel.Text = "Scale";
 			this.toolTip1.SetToolTip(this.scaleLabel, "Scale measures the size of the map drawn from the \r\ntop-left corner. It\'s essenti" +
@@ -396,58 +413,73 @@
 			// 
 			// scaleTB
 			// 
-			this.scaleTB.Location = new System.Drawing.Point(11, 214);
+			this.scaleTB.Location = new System.Drawing.Point(15, 263);
+			this.scaleTB.Margin = new System.Windows.Forms.Padding(4);
 			this.scaleTB.Name = "scaleTB";
-			this.scaleTB.Size = new System.Drawing.Size(211, 20);
+			this.scaleTB.Size = new System.Drawing.Size(280, 22);
 			this.scaleTB.TabIndex = 31;
 			this.scaleTB.Text = "33";
 			this.toolTip1.SetToolTip(this.scaleTB, "Scale measures the size of the map drawn from the \r\ntop-left corner. It\'s essenti" +
         "ally the zoom factor. Think of \r\nthe scale as magnification percent.\r\n\r\nThe typi" +
         "cal range for scale is 1 to 100.");
+			this.scaleTB.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.checkEnterDown);
 			// 
 			// clarityLabel
 			// 
 			this.clarityLabel.AutoSize = true;
-			this.clarityLabel.Location = new System.Drawing.Point(12, 237);
+			this.clarityLabel.Location = new System.Drawing.Point(16, 292);
+			this.clarityLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.clarityLabel.Name = "clarityLabel";
-			this.clarityLabel.Size = new System.Drawing.Size(35, 13);
+			this.clarityLabel.Size = new System.Drawing.Size(47, 17);
 			this.clarityLabel.TabIndex = 34;
 			this.clarityLabel.Text = "Clarity";
 			this.toolTip1.SetToolTip(this.clarityLabel, resources.GetString("clarityLabel.ToolTip"));
 			// 
 			// clarityTB
 			// 
-			this.clarityTB.Location = new System.Drawing.Point(11, 256);
+			this.clarityTB.Location = new System.Drawing.Point(15, 315);
+			this.clarityTB.Margin = new System.Windows.Forms.Padding(4);
 			this.clarityTB.Name = "clarityTB";
-			this.clarityTB.Size = new System.Drawing.Size(211, 20);
+			this.clarityTB.Size = new System.Drawing.Size(280, 22);
 			this.clarityTB.TabIndex = 33;
 			this.clarityTB.Text = "1";
 			this.toolTip1.SetToolTip(this.clarityTB, resources.GetString("clarityTB.ToolTip"));
+			this.clarityTB.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.checkEnterDown);
 			// 
 			// lacunarityLabel
 			// 
 			this.lacunarityLabel.AutoSize = true;
-			this.lacunarityLabel.Location = new System.Drawing.Point(12, 111);
+			this.lacunarityLabel.Location = new System.Drawing.Point(16, 137);
+			this.lacunarityLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lacunarityLabel.Name = "lacunarityLabel";
-			this.lacunarityLabel.Size = new System.Drawing.Size(56, 13);
+			this.lacunarityLabel.Size = new System.Drawing.Size(74, 17);
 			this.lacunarityLabel.TabIndex = 36;
 			this.lacunarityLabel.Text = "Lacunarity";
 			this.toolTip1.SetToolTip(this.lacunarityLabel, "increases num small features\r\n\r\nThe typical range for octaves is 1 to 8.");
 			// 
 			// lacunarityTB
 			// 
-			this.lacunarityTB.Location = new System.Drawing.Point(11, 130);
+			this.lacunarityTB.Location = new System.Drawing.Point(15, 160);
+			this.lacunarityTB.Margin = new System.Windows.Forms.Padding(4);
 			this.lacunarityTB.Name = "lacunarityTB";
-			this.lacunarityTB.Size = new System.Drawing.Size(211, 20);
+			this.lacunarityTB.Size = new System.Drawing.Size(280, 22);
 			this.lacunarityTB.TabIndex = 35;
 			this.lacunarityTB.Text = "2.0";
 			this.toolTip1.SetToolTip(this.lacunarityTB, "increases num small features\r\n\r\nThe typical range for octaves is 1 to 8.");
+			this.lacunarityTB.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.checkEnterDown);
+			// 
+			// desertToolStripMenuItem
+			// 
+			this.desertToolStripMenuItem.Name = "desertToolStripMenuItem";
+			this.desertToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.desertToolStripMenuItem.Text = "Desert";
+			this.desertToolStripMenuItem.Click += new System.EventHandler(this.desertToolStripMenuItem_Click_1);
 			// 
 			// mainWindow
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(861, 542);
+			this.ClientSize = new System.Drawing.Size(1148, 667);
 			this.Controls.Add(this.lacunarityLabel);
 			this.Controls.Add(this.lacunarityTB);
 			this.Controls.Add(this.clarityLabel);
@@ -472,6 +504,7 @@
 			this.Controls.Add(this.menuStrip1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menuStrip1;
+			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "mainWindow";
 			this.Text = "MapMaker";
 			((System.ComponentModel.ISupportInitialize)(this.mapImagePB)).EndInit();
@@ -523,9 +556,9 @@
 		private System.Windows.Forms.Label clarityLabel;
 		private System.Windows.Forms.TextBox clarityTB;
 		private System.Windows.Forms.ToolStripMenuItem continentsToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem desertToolStripMenuItem;
 		private System.Windows.Forms.Label lacunarityLabel;
 		private System.Windows.Forms.TextBox lacunarityTB;
+		private System.Windows.Forms.ToolStripMenuItem desertToolStripMenuItem;
 	}
 }
 

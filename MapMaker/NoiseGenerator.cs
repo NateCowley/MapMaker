@@ -121,7 +121,7 @@ namespace MapMaker
 				freq *= lac;
 			}
 
-			return noiseHeight;
+			return noiseHeight;// * Math.PI;
 		}
 	}
 
