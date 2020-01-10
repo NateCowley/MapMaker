@@ -49,7 +49,7 @@ namespace MapMaker
 			lastSchemeMItem = defaultColorSchemeToolStripMenuItem;
 			lastGeneratorMItem = improvedNoiseToolStripMenuItem;
 			lastBiomeMItem = customToolStripMenuItem;
-			ng = new ImprovedNoise();
+			ng = new OpenSimplexNoise();
 		}
 
 		private void generateImage()

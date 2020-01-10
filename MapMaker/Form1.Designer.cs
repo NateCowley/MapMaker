@@ -49,6 +49,7 @@
 			this.defaultColorSchemeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.sepiaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.blackAndWhiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.desertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.noiseGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.improvedNoiseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.simplexNoiseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,7 +72,6 @@
 			this.clarityTB = new System.Windows.Forms.TextBox();
 			this.lacunarityLabel = new System.Windows.Forms.Label();
 			this.lacunarityTB = new System.Windows.Forms.TextBox();
-			this.desertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.mapImagePB)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -260,11 +260,18 @@
 			this.blackAndWhiteToolStripMenuItem.Text = "Black and White";
 			this.blackAndWhiteToolStripMenuItem.Click += new System.EventHandler(this.blackAndWhiteToolStripMenuItem_Click);
 			// 
+			// desertToolStripMenuItem
+			// 
+			this.desertToolStripMenuItem.Name = "desertToolStripMenuItem";
+			this.desertToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
+			this.desertToolStripMenuItem.Text = "Desert";
+			this.desertToolStripMenuItem.Click += new System.EventHandler(this.desertToolStripMenuItem_Click_1);
+			// 
 			// noiseGeneratorToolStripMenuItem
 			// 
 			this.noiseGeneratorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.improvedNoiseToolStripMenuItem,
             this.simplexNoiseToolStripMenuItem,
+            this.improvedNoiseToolStripMenuItem,
             this.worleyNoiseToolStripMenuItem});
 			this.noiseGeneratorToolStripMenuItem.Name = "noiseGeneratorToolStripMenuItem";
 			this.noiseGeneratorToolStripMenuItem.Size = new System.Drawing.Size(129, 24);
@@ -272,24 +279,24 @@
 			// 
 			// improvedNoiseToolStripMenuItem
 			// 
-			this.improvedNoiseToolStripMenuItem.Checked = true;
-			this.improvedNoiseToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.improvedNoiseToolStripMenuItem.Name = "improvedNoiseToolStripMenuItem";
-			this.improvedNoiseToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
+			this.improvedNoiseToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.improvedNoiseToolStripMenuItem.Text = "Improved Noise";
 			this.improvedNoiseToolStripMenuItem.Click += new System.EventHandler(this.improvedNoiseToolStripMenuItem_Click);
 			// 
 			// simplexNoiseToolStripMenuItem
 			// 
+			this.simplexNoiseToolStripMenuItem.Checked = true;
+			this.simplexNoiseToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.simplexNoiseToolStripMenuItem.Name = "simplexNoiseToolStripMenuItem";
-			this.simplexNoiseToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
+			this.simplexNoiseToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.simplexNoiseToolStripMenuItem.Text = "Simplex Noise";
 			this.simplexNoiseToolStripMenuItem.Click += new System.EventHandler(this.simplexeNoiseToolStripMenuItem_Click);
 			// 
 			// worleyNoiseToolStripMenuItem
 			// 
 			this.worleyNoiseToolStripMenuItem.Name = "worleyNoiseToolStripMenuItem";
-			this.worleyNoiseToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
+			this.worleyNoiseToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.worleyNoiseToolStripMenuItem.Text = "Worley Noise";
 			this.worleyNoiseToolStripMenuItem.Click += new System.EventHandler(this.worleyNoiseToolStripMenuItem_Click);
 			// 
@@ -309,28 +316,28 @@
 			this.customToolStripMenuItem.Checked = true;
 			this.customToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.customToolStripMenuItem.Name = "customToolStripMenuItem";
-			this.customToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.customToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
 			this.customToolStripMenuItem.Text = "Default";
 			this.customToolStripMenuItem.Click += new System.EventHandler(this.customToolStripMenuItem_Click);
 			// 
 			// continentsToolStripMenuItem
 			// 
 			this.continentsToolStripMenuItem.Name = "continentsToolStripMenuItem";
-			this.continentsToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.continentsToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
 			this.continentsToolStripMenuItem.Text = "Continents";
 			this.continentsToolStripMenuItem.Click += new System.EventHandler(this.continentsToolStripMenuItem_Click);
 			// 
 			// plainsToolStripMenuItem
 			// 
 			this.plainsToolStripMenuItem.Name = "plainsToolStripMenuItem";
-			this.plainsToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.plainsToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
 			this.plainsToolStripMenuItem.Text = "Plains";
 			this.plainsToolStripMenuItem.Click += new System.EventHandler(this.plainsToolStripMenuItem_Click);
 			// 
 			// mountainToolStripMenuItem
 			// 
 			this.mountainToolStripMenuItem.Name = "mountainToolStripMenuItem";
-			this.mountainToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.mountainToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
 			this.mountainToolStripMenuItem.Text = "Mountains";
 			this.mountainToolStripMenuItem.Click += new System.EventHandler(this.mountainToolStripMenuItem_Click);
 			// 
@@ -467,13 +474,6 @@
 			this.lacunarityTB.Text = "2.0";
 			this.toolTip1.SetToolTip(this.lacunarityTB, "increases num small features\r\n\r\nThe typical range for octaves is 1 to 8.");
 			this.lacunarityTB.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.checkEnterDown);
-			// 
-			// desertToolStripMenuItem
-			// 
-			this.desertToolStripMenuItem.Name = "desertToolStripMenuItem";
-			this.desertToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
-			this.desertToolStripMenuItem.Text = "Desert";
-			this.desertToolStripMenuItem.Click += new System.EventHandler(this.desertToolStripMenuItem_Click_1);
 			// 
 			// mainWindow
 			// 

@@ -47,15 +47,15 @@ namespace MapMaker
 
 		public static ColorValue[] defaultRange =
 		{
-			new ColorValue(.09, Color.FromArgb(000, 000, 128)), // deeps
-			new ColorValue(.21, Color.FromArgb(000, 000, 191)), // mid
-			new ColorValue(.39, Color.FromArgb(000, 000, 255)), // shallows
-			new ColorValue(.45, Color.FromArgb(000, 128, 255)), // shore
-			new ColorValue(.51, Color.FromArgb(255, 255, 153)), // sand
-			new ColorValue(.69, Color.FromArgb(032, 160, 000)), // grass
-			new ColorValue(.79, Color.FromArgb(153, 102, 051)), // dirt
-			new ColorValue(.89, Color.FromArgb(128, 128, 128)), // rock
-			new ColorValue(.99, Color.FromArgb(255, 255, 255))  // snow
+			new ColorValue(.090, Color.FromArgb(000, 000, 128)), // deeps
+			new ColorValue(.210, Color.FromArgb(000, 000, 191)), // mid
+			new ColorValue(.390, Color.FromArgb(000, 000, 255)), // shallows
+			new ColorValue(.450, Color.FromArgb(000, 128, 255)), // shore
+			new ColorValue(.510, Color.FromArgb(255, 255, 153)), // sand
+			new ColorValue(.690, Color.FromArgb(032, 160, 000)), // grass
+			new ColorValue(.790, Color.FromArgb(153, 102, 051)), // dirt
+			new ColorValue(.890, Color.FromArgb(128, 128, 128)), // rock
+			new ColorValue(.990, Color.FromArgb(255, 255, 255))  // snow
 		};
 
 		public static ColorValue[] sepiaDefaultRange =
@@ -75,13 +75,11 @@ namespace MapMaker
 			new ColorValue(.750, Color.FromArgb(209, 209, 209)), // deeper land
 			new ColorValue(.999, Color.FromArgb(255, 255, 255))  // deeper land
 		};
-
-		// any row with "+" at the end is simply a darker version
+		
 		public static ColorValue[] desertRange = 
 		{
 			new ColorValue(.090, Color.FromArgb(000, 000, 255)), // water
 			new ColorValue(.210, Color.FromArgb(000, 128, 255)), // shallow water
-			new ColorValue(.390, Color.FromArgb(255, 255, 153)), // shoreline
 			new ColorValue(.450, Color.FromArgb(232, 232, 139)), // light sand
 			new ColorValue(.510, Color.FromArgb(232, 203, 139)), // light sand +
 			new ColorValue(.690, Color.FromArgb(212, 176, 119)), // sand
@@ -96,9 +94,6 @@ namespace MapMaker
 
 			switch (ct)
 			{
-				case ColorTone.DEFAULT:
-					scheme = defaultRange;
-					break;
 				case ColorTone.DEFAULTTOPO:
 					//scheme = defaultTopoRange;
 					break;
@@ -113,6 +108,9 @@ namespace MapMaker
 					break;
 				case ColorTone.DESERT:
 					scheme = desertRange;
+					break;
+				default:
+					scheme = defaultRange;
 					break;
 			}
 
