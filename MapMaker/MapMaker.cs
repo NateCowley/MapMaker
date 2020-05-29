@@ -144,7 +144,6 @@ namespace MapMaker
 
 			switch(biome)
 			{
-				// NOTE: archipelago is currently not used
 				case Biome.ARCHIPELAGO:
 					biomeFunction = archipelagoNoise;
 					break;
@@ -166,7 +165,6 @@ namespace MapMaker
 			}
 		}
 
-		// NOTE: archipelago is currently not used
 		public double archipelagoNoise(double noise)
 		{
 			return noise * 0.75;
@@ -174,14 +172,14 @@ namespace MapMaker
 
 		public double continentsNoise(double noise)
 		{
-			return plainsNoise(noise) * 1.3;
+			return noise;
 		}
 
 		public double plainsNoise(double noise)
 		{
 			double delta = midHeight - noise;
 
-			return (noise * 2 + delta) / 2 + .09;
+			return (noise * 2 + delta) / 2;
 		}
 
 		public double mountainsNoise(double noise)

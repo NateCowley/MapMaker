@@ -14,7 +14,7 @@ namespace MapMaker
 	{
 		public int octaves = 1;
 		public int clarity = 1;
-		public int seed = 0;
+		public int seed = 0, lastSeed = -1;
 		public double frequency = 1, amplitude = 1;
 		public double scale = .15;
 		public double persistence = .35;
@@ -26,18 +26,6 @@ namespace MapMaker
 		private ToolStripMenuItem lastSchemeMItem, lastGeneratorMItem, lastBiomeMItem;
 		private MapMaker mm = new MapMaker();
 		private ProgressForm pf = new ProgressForm();
-		
-		private int poctaves = 0;
-		private int pclarity = 0;
-		private int pseed = 0;
-		private double pfrequency = 1, pamplitude = 1;
-		private double pscale = .15;
-		private double ppersistence = .35;
-		private double placunarity = 2.0;
-		private double pxOffset = 0, pyOffset = 0;
-		private ColorTone pct = ColorTone.DEFAULT;
-		private Biome pbiome = Biome.CUSTOM;
-		private NoiseGenerator png;
 
 		public mainWindow()
 		{
@@ -49,31 +37,12 @@ namespace MapMaker
 			lastSchemeMItem = defaultColorSchemeToolStripMenuItem;
 			lastGeneratorMItem = improvedNoiseToolStripMenuItem;
 			lastBiomeMItem = customToolStripMenuItem;
-			ng = new OpenSimplexNoise();
+			ng = new ImprovedNoise();
 		}
 
 		private void generateImage()
 		{
 			setVariables();
-
-			if (checkVariables())
-			{
-				return;
-			}
-
-			pbiome = biome;
-			pseed = seed;
-			poctaves = octaves;
-			pclarity = clarity;
-			placunarity = lacunarity;
-			pct = ct;
-			pfrequency = frequency;
-			pamplitude = amplitude;
-			ppersistence = persistence;
-			pscale = scale;
-			pxOffset = xOffset;
-			pyOffset = yOffset;
-			png = ng;
 
 			pf.FormBorderStyle = FormBorderStyle.FixedSingle;
 			FormWindowState prevfws = pf.WindowState;
@@ -128,23 +97,6 @@ namespace MapMaker
 			mm.xOffset = xOffset;
 			mm.yOffset = yOffset;
 			mm.ng = ng;
-		}
-
-		private bool checkVariables()
-		{
-			return pbiome == biome &&
-				pseed == seed &&
-				poctaves == octaves &&
-				pclarity == clarity &&
-				placunarity == lacunarity &&
-				pct == ct &&
-				pfrequency == frequency &&
-				pamplitude == amplitude &&
-				ppersistence == persistence &&
-				pscale == scale &&
-				pxOffset == xOffset &&
-				pyOffset == yOffset &&
-				png == ng;
 		}
 
 		private bool setCheckedColorSchemeItem(ToolStripMenuItem tsmi)
@@ -314,27 +266,36 @@ namespace MapMaker
 		}
 
 		private void desertToolStripMenuItem_Click(object sender, EventArgs e)
-		{/*
+		{
 			if (setCheckedBiomeItem(desertToolStripMenuItem))
 			{
 				biome = Biome.DESERT;
-			}*/
-		}
-
-		private void desertToolStripMenuItem_Click_1(object sender, EventArgs e)
-		{
-			if(setCheckedColorSchemeItem(desertToolStripMenuItem))
-			{
-				ct = ColorTone.DESERT;
 			}
 		}
 
-		private void checkEnterDown(object sender, PreviewKeyDownEventArgs e)
+		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if(e.KeyCode == Keys.Enter)
-			{
-				generateImage();
-			}
+			notAvailable();
+		}
+
+		private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			notAvailable();
+		}
+
+		private void saveMapToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			notAvailable();
+		}
+
+		private void saveMapAsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			notAvailable();
+		}
+
+		private void notAvailable()
+		{
+			MessageBox.Show("Functionality not available yet");
 		}
 
 		private void mountainToolStripMenuItem_Click(object sender, EventArgs e)

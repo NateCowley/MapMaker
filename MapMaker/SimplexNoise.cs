@@ -2537,9 +2537,9 @@ namespace MapMaker
 
 			for (int i = 0; i < oct; i++)
 			{
-				double dx = x / scale * freq + seed / 100000;
-				double dy = y / scale * freq + seed / 100000;
-				double dz = z / scale * freq + seed / 100000;
+				double dx = x / scale * freq + seed;
+				double dy = y / scale * freq + seed;
+				double dz = z / scale * freq + seed;
 
 				total += noise(dx, dy, dz) * amp;
 
@@ -2548,7 +2548,7 @@ namespace MapMaker
 				freq *= lac;
 			}
 
-			return total / maxValue * Math.PI;
+			return total / maxValue;
 		}
 
 		private double extrapolate(int xsb, int ysb, double dx, double dy)

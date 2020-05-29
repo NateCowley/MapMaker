@@ -45,7 +45,7 @@ namespace MapMaker
 
 			int A = permutation[X] + Y, AA = permutation[A] + Z, AB = permutation[A + 1] + Z,      // HASH COORDINATES OF
 				 B = permutation[X + 1] + Y, BA = permutation[B] + Z, BB = permutation[B + 1] + Z;      // THE 8 CUBE CORNERS,
-			
+
 			return lerp(w, lerp(v, lerp(u, grad(permutation[AA], x, y, z),  // AND ADD
 									 grad(permutation[BA], x - 1, y, z)), // BLENDED
 							 lerp(u, grad(permutation[AB], x, y - 1, z),  // RESULTS
