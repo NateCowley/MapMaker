@@ -90,8 +90,6 @@ namespace MapMaker
 
 		public virtual void setSeed(int seed = -1)
 		{
-			Random r = new Random();
-
 			if(seed < 0)
 			{
 				seed = new Random().Next();

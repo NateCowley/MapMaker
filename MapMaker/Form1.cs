@@ -79,24 +79,8 @@ namespace MapMaker
 			Double.TryParse(scaleTB.Text, out scale);
 			scale *= 100;
 
-			if (seed < 0)
-			{
-				seed *= -1;
-			}
-
-			mm.setBiome(biome);
-			mm.seed = seed;
-			mm.octaves = octaves;
-			mm.clarity = clarity;
-			mm.lacunarity = lacunarity;
-			mm.ct = ct;
-			mm.frequency = frequency;
-			mm.amplitude = amplitude;
-			mm.persistence = persistence;
-			mm.scale = scale;
-			mm.xOffset = xOffset;
-			mm.yOffset = yOffset;
-			mm.ng = ng;
+			mm.setVariables(biome, ct, ng, seed, octaves, clarity, lacunarity, frequency, amplitude, 
+				persistence, scale, xOffset, yOffset);
 		}
 
 		private bool setCheckedColorSchemeItem(ToolStripMenuItem tsmi)
