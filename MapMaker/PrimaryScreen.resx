@@ -117,46 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>132, 17</value>
-  </metadata>
-  <data name="octaveTB.ToolTip" xml:space="preserve">
-    <value>Octaves measure the number of samples taken per area.
-If you want higher detail terrain, use more octaves. 
-The higher the octave count, the longer it takes to 
-generate terrain.
-
-The typical range for octaves is 1 to 8.</value>
-  </data>
-  <data name="octaveLabel.ToolTip" xml:space="preserve">
-    <value>Octaves measure the number of samples taken per area.
-If you want higher detail terrain, use more octaves. 
-The higher the octave count, the longer it takes to 
-generate terrain.
-
-The typical range for octaves is 1 to 8.</value>
-  </data>
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="clarityLabel.ToolTip" xml:space="preserve">
-    <value>Clarity measures how detailed the color scheme is. A 
-higher clarity value will result in more color levels. While 
-a lower value will result in less color levels. Values of 2 or 
-3 are good for appearing topographical. Values of 5 or 
-more tend to look fuzzy.
-
-The typical range for clarity is 1 to 10.</value>
-  </data>
-  <data name="clarityTB.ToolTip" xml:space="preserve">
-    <value>Clarity measures how detailed the color scheme is. A 
-higher clarity value will result in more color levels. While 
-a lower value will result in less color levels. Values of 2 or 
-3 are good for appearing topographical. Values of 5 or 
-more tend to look fuzzy.
-
-The typical range for clarity is 1 to 10.</value>
-  </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>132, 17</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

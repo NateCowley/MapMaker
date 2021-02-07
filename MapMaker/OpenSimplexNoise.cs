@@ -62,17 +62,23 @@ namespace MapMaker
 		//Uses a simple 64-bit LCG.
 		public OpenSimplexNoise(long seed)
 		{
+			setSeed((int)seed);
+		}
+
+		public override void setSeed(int seed = -1)
+		{
+			long seedl = (long)seed;
 			perm = new short[256];
 			permGradIndex3D = new short[256];
 			short[] source = new short[256];
 			for (short i = 0; i < 256; i++)
 				source[i] = i;
-			seed = seed * 6364136223846793005l + 1442695040888963407l;
-			seed = seed * 6364136223846793005l + 1442695040888963407l;
-			seed = seed * 6364136223846793005l + 1442695040888963407l;
+			seedl = seedl * 6364136223846793005l + 1442695040888963407l;
+			seedl = seedl * 6364136223846793005l + 1442695040888963407l;
+			seedl = seedl * 6364136223846793005l + 1442695040888963407l;
 			for (int i = 255; i >= 0; i--)
 			{
-				seed = seed * 6364136223846793005l + 1442695040888963407l;
+				seedl = seedl * 6364136223846793005l + 1442695040888963407l;
 				int r = (int)((seed + 31) % (i + 1));
 				if (r < 0)
 					r += (i + 1);
@@ -80,6 +86,7 @@ namespace MapMaker
 				permGradIndex3D[i] = (short)((perm[i] % (gradients3D.Length / 3)) * 3);
 				source[r] = source[i];
 			}
+			this.seed = seed;
 		}
 
 		//2D OpenSimplex Noise.
@@ -899,7 +906,6 @@ namespace MapMaker
 		//4D OpenSimplex Noise.
 		public double noise(double x, double y, double z, double w)
 		{
-
 			//Place input coordinates on simplectic honeycomb.
 			double stretchOffset = (x + y + z + w) * STRETCH_CONSTANT_4D;
 			double xs = x + stretchOffset;
@@ -2535,20 +2541,44 @@ namespace MapMaker
 			double total = 0;
 			double maxValue = 0;
 
+			string res = "";
+
+			if(amp <= .000001)
+			{
+				amp = 1.0;
+			}
+
 			for (int i = 0; i < oct; i++)
 			{
-				double dx = x / scale * freq + seed;
-				double dy = y / scale * freq + seed;
-				double dz = z / scale * freq + seed;
+				double dx = x / scale * freq + seed + .1;
+				double dy = y / scale * freq + seed + .1;
+				double dz = z / scale * freq + seed + .1;
 
-				total += noise(dx, dy, dz) * amp;
+				total += noise(dx + .1, dy * -1 + .1, dz + .1, .19960427) * amp;
+
+				if((total <= 0.00000000001 && total >= -0.00000000001) || total == Double.NaN)
+				{
+					seed /= 2 + 1;
+					this.setSeed(seed);
+					//i -= 1;
+					continue;
+				}
+
+				//res += "dx: " + dx.ToString() + ", dy: " + dy.ToString() + ", dz: " + dz.ToString() + ", total: " + total.ToString() + ", amp: " + amp.ToString() + "\n";
 
 				maxValue += amp;
 				amp *= per;
 				freq *= lac;
 			}
 
-			return total / maxValue;
+			/*
+			using (System.IO.StreamWriter sw = System.IO.File.AppendText(System.IO.Directory.GetCurrentDirectory() + "\\output.log"))
+			{
+				sw.WriteLine(res + "maxValue: " + maxValue.ToString());
+			}
+			*/
+
+			return total / (maxValue + .1);
 		}
 
 		private double extrapolate(int xsb, int ysb, double dx, double dy)

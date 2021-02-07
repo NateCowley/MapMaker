@@ -17,6 +17,7 @@ namespace MapMaker
 		protected double frequency = 16, amplitude = .125;
 		protected double persistence = .25;
 		protected int seed;
+		protected double[] miscOptions;
 
 		/// <summary>
 		/// Perlin's default permutation array
@@ -97,6 +98,11 @@ namespace MapMaker
 			}
 
 			this.seed = seed;
+		}
+
+		public virtual void setMiscOptions(double[] options)
+		{
+
 		}
 		
 		public abstract double noise(double x, double y = .0427, double z = .1996);

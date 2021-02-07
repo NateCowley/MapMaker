@@ -30,3 +30,17 @@ C:\Users\lupus\Documents\GitHub\MapMaker\MapMaker\obj\Debug\MapMaker.csproj.Gene
 C:\Users\lupus\Documents\GitHub\MapMaker\MapMaker\obj\Debug\MapMaker.csproj.CoreCompileInputs.cache
 C:\Users\lupus\Documents\GitHub\MapMaker\MapMaker\obj\Debug\MapMaker.exe
 C:\Users\lupus\Documents\GitHub\MapMaker\MapMaker\obj\Debug\MapMaker.pdb
+A:\GitHub\MapMaker\MapMaker\bin\Debug\MapMaker.exe.config
+A:\GitHub\MapMaker\MapMaker\bin\Debug\MapMaker.exe
+A:\GitHub\MapMaker\MapMaker\bin\Debug\MapMaker.pdb
+A:\GitHub\MapMaker\MapMaker\obj\Debug\MapMaker.csprojAssemblyReference.cache
+A:\GitHub\MapMaker\MapMaker\obj\Debug\MapMaker.Properties.Resources.resources
+A:\GitHub\MapMaker\MapMaker\obj\Debug\MapMaker.csproj.GenerateResource.cache
+A:\GitHub\MapMaker\MapMaker\obj\Debug\MapMaker.csproj.CoreCompileInputs.cache
+A:\GitHub\MapMaker\MapMaker\obj\Debug\MapMaker.exe
+A:\GitHub\MapMaker\MapMaker\obj\Debug\MapMaker.pdb
+A:\GitHub\MapMaker\MapMaker\obj\Debug\MapMaker.MapCombinator.resources
+A:\GitHub\MapMaker\MapMaker\obj\Debug\MapMaker.CartographerOptionPanel.resources
+A:\GitHub\MapMaker\MapMaker\obj\Debug\MapMaker.MapCombinatorOptionPanel.resources
+A:\GitHub\MapMaker\MapMaker\obj\Debug\MapMaker.PrimaryScreen.resources
+A:\GitHub\MapMaker\MapMaker\obj\Debug\MapMaker.ProgressForm.resources

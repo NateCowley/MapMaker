@@ -27,7 +27,7 @@ namespace MapMaker
 			this.color = color;
 		}
 
-		public string ToString()
+		public override string ToString()
 		{
 			return "valueLimit: " + valueLimit.ToString() + ", color: " + color.ToString();
 		}

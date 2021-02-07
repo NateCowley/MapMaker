@@ -34,7 +34,14 @@ namespace MapMaker
 
 			set
 			{
-				progressBar1.Value = value;
+				if(value < 0)
+				{
+					progressBar1.Value = 0;
+				}
+				else
+				{
+					progressBar1.Value = value;
+				}
 			}
 		}
 

@@ -1,27 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace MapMaker
 {
-	public enum Biome
+	public abstract class MapMaker
 	{
-		CUSTOM,
-		ARCHIPELAGO,
-		CONTINENTS,
-		PLAINS,
-		MOUNTAINS,
-		DESERT,
-	}
-
-	public partial class MapMaker
-	{
+		#region MEMBERS
 		public int clarity = 1;
 		public int octaves = 1;
 		public int seed = 0;
@@ -32,16 +20,19 @@ namespace MapMaker
 		public double lacunarity = 2.0;
 		public double plainsValue = 1.0;
 		public ColorTone ct = ColorTone.DEFAULT;
-		public Biome biome = Biome.ARCHIPELAGO;
+		public Biome biome = Biome.ARCHIPELAGO_SUBTRACTIVE;
 		public NoiseGenerator ng;
-		public delegate double AlterNoise(double noise);
+		public double[] miscGeneratorOptions;
+		public double[] miscBiomeOptions;
+		protected double width;
+		protected double height;
+		protected delegate double AlterNoise(double noise, int x, int y);
 
 		// these are save variables used to keep us from completely
 		// regenerating the map if we're just doing a recolor
-		private double[] prevPoints;
-		private Bitmap prevImage;
+		protected Bitmap prevImage;
 
-		private int prevWidth = 0, prevHeight = 0;
+		protected int prevWidth = 0, prevHeight = 0;
 		public int prevClarity = -1;
 		public int prevOctaves = -1;
 		public int prevSeed = -1;
@@ -52,348 +43,101 @@ namespace MapMaker
 		public double prevLacunarity = -2.0;
 		public double prevPlainsValue = -1.0;
 		public ColorTone prevct = ColorTone.BLACKANDWHITE;
-		public Biome prevBiome = Biome.ARCHIPELAGO;
+		public Biome prevBiome = Biome.ARCHIPELAGO_SUBTRACTIVE;
 		public NoiseGenerator prevng;
+		public double[] prevMiscGeneratorOptions;
+		public double[] prevMiscBiomeOptions;
 
-		private double midHeight = 0.49;
-		private double biomeVar = 1.0;
-		private AlterNoise biomeFunction;
+		protected double midHeight = 0.49;
+		protected double biomeVar = 1.0;
+		protected AlterNoise biomeFunction;
 
-		public MapMaker()
+		protected string[] heightNums;
+		
+		protected static MapPixel[] pixels;
+		
+		protected static double noiseMin = Double.MaxValue;
+		protected static double noiseMax = Double.MinValue;
+		
+		protected CartographerOptionPanel cop;
+
+		#region STATICMEMBERS
+		/// <summary>
+		/// The lowest value possible once normalized
+		/// </summary>
+		public static readonly double NORMALIZED_MIN = 0.0;
+		/// <summary>
+		/// The height value possible once normalized
+		/// </summary>
+		public static readonly double NORMALIZED_MAX = 1.0;
+
+		/// <summary>
+		/// The highest point on Earth (Everest's peak), used as the maximum height on the map
+		/// </summary>
+		protected static readonly double MAX_MAP_HEIGHT_REAL = 29032;
+
+		/// <summary>
+		/// The lowest point on Earth (Mariana Trench), used as the maximum depth on the map
+		/// </summary>
+		protected static readonly double MAX_MAP_DEPTH_REAL = -36037;
+
+		/// <summary>
+		/// A value representing 12 vertical inches in the real world, on the normalized map
+		/// </summary>
+		protected static readonly double NORMALIZED_MAP_FOOT_REAL = -1 / (MAX_MAP_DEPTH_REAL - MAX_MAP_HEIGHT_REAL);
+
+		/// <summary>
+		/// The highest point on a fantasy world
+		/// </summary>
+		protected static readonly double MAX_MAP_HEIGHT_FANTASY = 100000;
+
+		/// <summary>
+		/// The lowest point on a fantasy world
+		/// </summary>
+		protected static readonly double MAX_MAP_DEPTH_FANTASY = -100000;
+
+		/// <summary>
+		/// A value representing 12 vertical inches in a fantasy world, on the normalized map
+		/// </summary>
+		public static readonly double NORMALIZED_MAP_FOOT_FANTASY = .000005;
+		#endregion STATICMEMBERS
+		#endregion MEMBERS
+
+		#region PROPERTIES
+		public string[] HeightNums
 		{
-			biomeFunction = defaultNoise;
-		}
-
-		public Bitmap generateImage(int width, int height, ProgressForm pf = null)
-		{
-			if(isRepeatedSetup())
+			get
 			{
-				return prevImage;
-			}
-			else if(onlyDifferentColorScheme() && prevImage != null)
-			{
-				if (pf != null)
+				if (heightNums.Length < 1)
 				{
-					pf.ProgressBarMax = width * height;
-					pf.ProgressBarValue = 0;
-					pf.Visible = true;
+					return new string[0];
 				}
 
-				for (int i = 0; i < width; i++)
-				{
-					for(int j = 0; j < height; j++)
-					{
-						prevImage.SetPixel(i, j, ColorScheme.getColorFromValue(prevPoints[i * height + j], ct, clarity));
-					}
-
-					if (pf != null)
-					{
-						pf.ProgressBarValue += height;
-					}
-				}
-
-				if(pf != null)
-				{
-					pf.Visible = false;
-				}
-
-				return prevImage;
+				return heightNums;
 			}
-
-			string[,] nums = new string[width, height];
-
-			if (seed < 0)
-			{
-				seed *= -1;
-			}
-
-			Bitmap bm = new Bitmap(width, height);
-
-			prevPoints = new double[width * height];
-
-			Graphics g = Graphics.FromImage(bm);
-
-			g.FillRectangle(Brushes.Black, 0, 0, width, height);
-
-			if (ng == null)
-			{
-				ng = new ImprovedNoise();
-			}
-
-			ng.setSeed(seed);
-
-			if (pf != null)
-			{
-				pf.ProgressBarMax = width * height * 2;
-				pf.ProgressBarValue = 0;
-				pf.Visible = true;
-			}
-
-			double[,] noiseMap = new double[width, height];
-			double max = Double.MinValue;
-			double min = Double.MaxValue;
-
-			for (int i = 0; i < width; i++)
-			{
-				for (int j = 0; j < height; j++)
-				{
-					// get the current x and y
-					double dx = (double)(i) + xOffset;
-					double dy = (double)(j) + yOffset;
-
-					dx *= plainsValue;
-					dy *= plainsValue;
-
-					// get the noise value for that x and y
-					double noise = ng.octaveNoise(dx * biomeVar, .1996 * biomeVar, dy * biomeVar, octaves, frequency, 
-						lacunarity, amplitude, persistence, scale, seed);
-
-					if(noise > max)
-					{
-						max = noise;
-					}
-					else if(noise < min)
-					{
-						min = noise;
-					}
-
-					noiseMap[i, j] = noise;
-				}
-
-				if (pf != null)
-				{
-					pf.ProgressBarValue += height;
-				}
-			}
-
-			for (int i = 0; i < width; i++)
-			{
-				for (int j = 0; j < height; j++)
-				{
-					// normalize the noisemap value
-					noiseMap[i, j] = normalize(noiseMap[i, j], min, max);
-
-					// after normalizing the noisemap value, adjust it to fit the biome
-					noiseMap[i, j] = biomeFunction(noiseMap[i, j]);
-
-					// set the pixel in the bitmap with the final value
-					bm.SetPixel(i, j, ColorScheme.getColorFromValue(noiseMap[i, j], ct, clarity));
-
-					// save the final value of the pixel to print to log later
-					nums[i, j] = noiseMap[i, j].ToString();
-
-					prevPoints[i * height + j] = noiseMap[i, j];
-				}
-
-				if (pf != null)
-				{
-					pf.ProgressBarValue += height; 
-				}
-			}
-
-			if (pf != null)
-			{
-				pf.Visible = false;
-			}
-
-			string[] finalNums = new string[width * height];
-
-			for(int i = 0; i < width; i++)
-			{
-				for(int j = 0; j < height; j++)
-				{
-					prevPoints[i * height + j] = noiseMap[i, j];
-					finalNums[i * height + j] = nums[i, j];
-				}
-			}
-
-			//writeToDebugFile(finalNums);
-
-			prevImage = bm;
-
-			// set the newly created bitmap as the map image
-			return bm;
 		}
 
-		public void setVariables(Biome biome, ColorTone ct, NoiseGenerator ng, int seed, 
-			int octaves, int clarity, double lacunarity, double frequency, double amplitude, 
-			double persistence, double scale, double xOffset, double yOffset)
+		/// <summary>
+		/// The width is actually stored as a double for quicker calculations, but sometimes we need to use 
+		/// it as an int.<para>This was the quickest way to solve that issue</para>
+		/// </summary>
+		public int Width
 		{
-			if (seed < 0)
-			{
-				seed *= -1;
-			}
-
-			prevBiome = this.biome;
-			prevSeed = this.seed;
-			prevOctaves = this.octaves;
-			prevClarity = this.clarity;
-			prevLacunarity = this.lacunarity;
-			prevct = this.ct;
-			prevFrequency = this.frequency;
-			prevAmplitude = this.amplitude;
-			prevPersistence = this.persistence;
-			prevScale = this.scale;
-			prevXOffset = this.xOffset;
-			prevYOffset = this.yOffset;
-			prevng = this.ng;
-
-			this.setBiome(biome);
-			this.seed = seed;
-			this.octaves = octaves;
-			this.clarity = clarity;
-			this.lacunarity = lacunarity;
-			this.ct = ct;
-			this.frequency = frequency;
-			this.amplitude = amplitude;
-			this.persistence = persistence;
-			this.scale = scale;
-			this.xOffset = xOffset;
-			this.yOffset = yOffset;
-			this.ng = ng;
+			get { return (int)width; }
 		}
 
-		public void setBiome(Biome b)
+		/// <summary>
+		/// The height is actually stored as a double for quicker calculations, but sometimes we need to use 
+		/// it as an int.<para>This was the quickest way to solve that issue</para>
+		/// </summary>
+		public int Height
 		{
-			biome = b;
-
-			switch(biome)
-			{
-				case Biome.ARCHIPELAGO:
-					biomeFunction = archipelagoNoise;
-					break;
-				case Biome.CONTINENTS:
-					biomeFunction = continentsNoise;
-					break;
-				case Biome.PLAINS:
-					biomeFunction = plainsNoise;
-					break;
-				case Biome.MOUNTAINS:
-					biomeFunction = mountainsNoise;
-					break;
-				case Biome.DESERT:
-					biomeFunction = desertNoise;
-					break;
-				default: // also Biome.CUSTOM/archipelago
-					biomeFunction = defaultNoise;
-					break;
-			}
+			get { return (int)height; }
 		}
+		#endregion PROPERTIES
 
-		#region BIOME_NOISE_FUNCTIONS
-		public double archipelagoNoise(double noise)
-		{
-			return noise * 0.75;
-		}
+		public abstract Bitmap GenerateMap(int width, int height, ProgressForm pf = null);
 
-		public double continentsNoise(double noise)
-		{
-			return noise;
-		}
-
-		public double plainsNoise(double noise)
-		{
-			double delta = midHeight - noise;
-
-			return (noise * 2 + delta) / 2;
-		}
-
-		public double mountainsNoise(double noise)
-		{
-			return noise * 1.5;
-		}
-
-		public double desertNoise(double noise)
-		{
-			return noise;
-		}
-
-		public double defaultNoise(double noise)
-		{
-			return noise;
-		}
-		#endregion
-
-		public double normalize(double val, double min, double max)
-		{
-			return (val - min) / (max - min);
-		}
-
-		public void writeToDebugFile(string output)
-		{
-			string fullPath = System.IO.Directory.GetCurrentDirectory() + "\\debugFile.log";
-
-			if (System.IO.File.Exists(fullPath))
-			{
-				System.IO.File.Delete(fullPath);
-			}
-
-			System.IO.File.Create(fullPath);
-			System.IO.File.WriteAllText(fullPath, output);
-		}
-
-		public void writeToDebugFile(string[] output)
-		{
-			string res = "";
-			MessageBox.Show("in");
-			for(int i = 0; i < output.Length; i++)
-			{
-				res += output[i];
-				res += "\n";
-			}
-			MessageBox.Show("here");
-			writeToDebugFile(res);
-		}
-
-		private bool isRepeatedSetup()
-		{
-			// if all of the settings are still the same return true
-			if
-			(
-				biome == prevBiome && 
-				seed == prevSeed &&
-				octaves == prevOctaves &&
-				clarity == prevClarity &&
-				lacunarity == prevLacunarity &&
-				ct == prevct &&
-				frequency == prevFrequency &&
-				amplitude == prevAmplitude &&
-				persistence == prevPersistence &&
-				scale == prevScale &&
-				xOffset == prevXOffset &&
-				yOffset == prevYOffset &&
-				ng == prevng
-			)
-			{
-				return true;
-			}
-
-			return false;
-		}
-
-		private bool onlyDifferentColorScheme()
-		{
-			if
-			(
-				biome == prevBiome &&
-				seed == prevSeed &&
-				octaves == prevOctaves &&
-				clarity == prevClarity &&
-				lacunarity == prevLacunarity &&
-				frequency == prevFrequency &&
-				amplitude == prevAmplitude &&
-				persistence == prevPersistence &&
-				scale == prevScale &&
-				xOffset == prevXOffset &&
-				yOffset == prevYOffset &&
-				ng == prevng && 
-				ct != prevct
-			)
-			{
-				return true;
-			}
-
-			return false;
-		}
+		public abstract void retrieveVariables();
 	}
 }

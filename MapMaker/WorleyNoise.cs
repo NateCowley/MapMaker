@@ -1,364 +1,379 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Numerics;
+using System.Windows.Forms;
 
 namespace MapMaker
 {
-	public class WorleyNoise : NoiseGenerator
+	/// <summary>
+	/// An implementation of Worley noise using a regular grid
+	/// </summary>
+	class WorleyNoise : NoiseGenerator
 	{
-		private double[] points;
+		//1240 510
+		public int mapWidth = 620, mapHeight = 506;
+		public int numPoints = 9;
+		public List<CellPoint> points;
 
-		private static readonly double SQRT_2 = 1.4142135623730950488;
-
-		private static readonly double SQRT_3 = 1.7320508075688772935;
-
-		private short distanceMethod = 0;
-
-		public double randRange(double min, double max)
+		public WorleyNoise()
 		{
-			return Math.Floor(new Random().NextDouble() * ((max) - min) + min);
+			distributeCellPoints();
 		}
 
-		public override double noise(double x, double y, double z)
+		public override double noise(double x, double y = 0.0427, double z = 0.1996)
 		{
-			int xInt = (x > .0 ? (int)x : (int)x - 1);
+			double[] distances = new double[numPoints];
 
-			int yInt = (y > .0 ? (int)y : (int)y - 1);
+			CellPoint p = new CellPoint(x, y, z);
 
-			int zInt = (z > .0 ? (int)z : (int)z - 1);
-
-			double minDist = 32000000.0;
-
-			double xCandidate = 0;
-
-			double yCandidate = 0;
-
-			double zCandidate = 0;
-
-			Random rand = new Random((int)seed);
-
-			for (int zCur = zInt - 2; zCur <= zInt + 2; zCur++)
+			for(int i = 0; i < numPoints; i++)
 			{
-				for (int yCur = yInt - 2; yCur <= yInt + 2; yCur++)
+				distances[i] = CellPoint.distance(p, points[i]);
+			}
+
+			Array.Sort(distances);
+
+			int n = 0;
+
+			return distances[n];
+		}
+
+		public override double octaveNoise(double x, double y, double z, int oct, double freq, double lac, double amp, double per, double scale, int seed)
+		{
+			return noise(x, y, z);
+		}
+
+		public override void setMiscOptions(double[] options)
+		{
+			if(options.Length < 1)
+			{
+				MessageBox.Show("Error: options not provided for worley noise");
+				return;
+			}
+
+			mapWidth = (int)options[0];
+			mapHeight = (int)options[1];
+			numPoints = (int)options[2];
+		}
+
+		public void distributeCellPoints()
+		{
+			points = new List<CellPoint>();
+
+			Random rand = new Random();
+
+			NoiseGenerator osn = new ImprovedNoise();
+
+			osn.setSeed(seed);
+
+			string str = "";
+			//MessageBox.Show(numPoints.ToString());
+			
+			for(int i = 0; i < numPoints; i++)
+			{
+				double xPos = (seed * 42069.5 / 1996) * (i + 9);
+				double yPos = (seed * 42069.5 / 1996) * (i + 9);
+				double zPos = (seed * 42069.5 / 1996) * (i + 9);
+
+				uint ux = (uint)xPos;
+				uint uy = (uint)yPos;
+				uint uz = (uint)zPos;
+
+				ux = ux & 0xFFc;
+				uy = uy & 0xFFa;
+				uz = uz & 0xFFc;
+
+				xPos = ux * 10000 / 9.3;
+				yPos = uy * 10000 / 9.3;
+				zPos = uz * 10000 / 9.3;
+
+				xPos = (osn.octaveNoise((xPos), .1996, yPos, 1, 16, 2.0, .35, 33, 1, seed) * 1000000);
+				yPos = (osn.octaveNoise((yPos), .1996, xPos, 1, 16, 2.0, .35, 33, 1, seed) * 1000000);
+				zPos = (osn.octaveNoise((xPos), (yPos), .1996, 8, 16, 2.0, .35, 33, 1, seed) * 1000000);
+
+				str += "prep: " + (new CellPoint((double)xPos, (double)yPos)).ToString() + "\n";
+
+				int x = ((int)(xPos)) % mapWidth;
+				int y = ((int)(yPos)) % mapHeight;
+				int z = (int)(zPos);
+				
+				str += "pre: " + (new CellPoint((double)x, (double)y)).ToString() + "\n";
+				
+				if (x < 0)
 				{
-					for (int xCur = xInt - 2; xCur <= xInt + 2; xCur++)
-					{
-						double xPos = xCur + valueNoise3D(xCur, yCur, zCur, seed);
-
-						double yPos = yCur + valueNoise3D(xCur, yCur, zCur, rand.Next());
-
-						double zPos = zCur + valueNoise3D(xCur, yCur, zCur, rand.Next());
-
-						double xDist = xPos - x;
-
-						double yDist = yPos - y;
-
-						double zDist = zPos - z;
-
-						double dist = xDist * xDist + yDist * yDist + zDist * zDist;
-
-						if (dist < minDist)
-						{
-							minDist = dist;
-
-							xCandidate = xPos;
-
-							yCandidate = yPos;
-
-							zCandidate = zPos;
-						}
-					}
+					x *= -1;
+					x %= mapWidth;
 				}
+
+				if(y < 0)
+				{
+					y *= -1;
+					y %= mapHeight;
+				}
+
+				str += (new CellPoint((double)x, (double)y)).ToString() + "\n";
+
+				points.Add(new CellPoint((double)x, (double)y));
 			}
 
-			double xDistFinal = xCandidate - x;
-
-			double yDistFinal = yCandidate - y;
-
-			double zDistFinal = zCandidate - z;
-
-			return getDistance(xDistFinal, yDistFinal, zDistFinal);
+			//MessageBox.Show(str);
 		}
 
-		public override double octaveNoise(double x, double y, double z, int oct, double freq,
-			double lac, double amp, double per, double scale, int seed)
+		public override void setSeed(int seed = -1)
 		{
-			double noiseHeight = 0;
+			base.setSeed(seed);
 
-			for (int i = 0; i < oct; i++)
-			{
-				double dx = x / scale * freq + seed;
-				double dy = y / scale * freq + seed;
-				double dz = z / scale * freq + seed;
-
-				double noise = this.noise(dx, dy, dz);// * 2 - 1;
-
-				noiseHeight += noise * amp;
-				amp *= per;
-				freq *= lac;
-			}
-
-			return noiseHeight;
-		}
-
-		private double getDistance(double xDist, double zDist)
-		{
-			switch (distanceMethod)
-			{
-				case 0:
-					return Math.Sqrt(xDist * xDist + zDist * zDist) / SQRT_2;
-				case 1:
-					return xDist + zDist;
-				case 2:
-					return Math.Pow(Math.E, Math.Sqrt(xDist * xDist + zDist * zDist) / SQRT_2) / Math.E;
-				default:
-					return 1.0;
-			}
-		}
-
-		private double getDistance(double xDist, double yDist, double zDist)
-		{
-			switch (distanceMethod)
-			{
-				case 0:
-					return Math.Sqrt(xDist * xDist + yDist * yDist + zDist * zDist) / SQRT_3;
-				case 1:
-					return xDist + yDist + zDist;
-				default:
-					return 1.0;
-			}
-		}
-
-		public short getDistanceMethod()
-		{
-			return distanceMethod;
-		}
-
-		public void setDistanceMethod(short distanceMethod)
-		{
-			this.distanceMethod = distanceMethod;
-		}
-
-		public static double valueNoise2D(int x, int z, long seed)
-		{
-			long n = (1619 * x + 6971 * z + 1013 * seed) & 0x7fffffff;
-
-			n = (n >> 13) ^ n;
-
-			return 1.0 - ((double)((n * (n * n * 60493 + 19990303) + 1376312589) & 0x7fffffff) / 1073741824.0);
-		}
-
-		public static double valueNoise3D(int x, int y, int z, long seed)
-		{
-			long n = (1619 * x + 31337 * y + 6971 * z + 1013 * seed) & 0x7fffffff;
-
-			n = (n >> 13) ^ n;
-
-			return 1.0 - ((double)((n * (n * n * 60493 + 19990303) + 1376312589) & 0x7fffffff) / 1073741824.0);
+			distributeCellPoints();
 		}
 	}
 
-	public class VoronoiGenerator
+	class CellPoint
 	{
-		private static readonly double SQRT_2 = 1.4142135623730950488;
+		public double x, y, z;
 
-		private static readonly double SQRT_3 = 1.7320508075688772935;
-
-		private long seed;
-
-		private short distanceMethod;
-
-		public VoronoiGenerator(long seed, short distanceMethod /*TODO: int octaves*/)
+		public CellPoint()
 		{
-			this.seed = seed;
-			this.distanceMethod = distanceMethod;
+
 		}
 
-		private double getDistance(double xDist, double zDist)
+		public CellPoint(double x = 0, double y = 0, double z = 0)
 		{
-			switch (distanceMethod)
+			this.x = x;
+			this.y = y;
+			this.z = z;
+		}
+
+		public static double distance(CellPoint p1, CellPoint p2)
+		{
+			//d = ((x2 - x1)^2 + (y2 - y1)^2 + (z2-z1)^2)^(1/2)
+			return Math.Sqrt(Math.Pow((p2.x - p1.x), 2) + Math.Pow((p2.y - p1.y), 2) + Math.Pow((p2.z - p1.z), 2));
+		}
+
+		public override string ToString()
+		{
+			return "X: " + x + ", Y: " + y + ", Z: " + z;
+		}
+	}
+
+	class QuadTree
+	{
+		public static readonly int MAX_CELL_POINT_COUNT = 1;
+
+		private Cell root;
+
+		public QuadTree()
+		{
+
+		}
+
+		public QuadTree(int mapWidth, int mapHeight)
+		{
+			root = new Cell(0, 0, mapWidth, mapHeight);
+		}
+
+		public void addPoint(Point newPoint)
+		{
+			if (root != null)
 			{
-				case 0:
-					return Math.Sqrt(xDist * xDist + zDist * zDist) / SQRT_2;
-				case 1:
-					return xDist + zDist;
-				case 2:
-					return Math.Pow(Math.E, Math.Sqrt(xDist * xDist + zDist * zDist) / SQRT_2) / Math.E;
-				default:
-					return 1.0;
+				root.addPoint(newPoint);
 			}
 		}
 
-		private double getDistance(double xDist, double yDist, double zDist)
+		private class Cell
 		{
-			switch (distanceMethod)
+			// upper-left hand corner of Cell
+			private Point cellStartPoint;
+
+			public int X
 			{
-				case 0:
-					return Math.Sqrt(xDist * xDist + yDist * yDist + zDist * zDist) / SQRT_3;
-				case 1:
-					return xDist + yDist + zDist;
-				default:
-					return 1.0;
+				get { return cellStartPoint.X; }
 			}
-		}
 
-		public short getDistanceMethod()
-		{
-			return distanceMethod;
-		}
-
-		public long getSeed()
-		{
-			return seed;
-		}
-
-		public double noise(double x, double z, double frequency)
-		{
-			x *= frequency;
-
-			z *= frequency;
-
-			int xInt = (x > .0 ? (int)x : (int)x - 1);
-
-			int zInt = (z > .0 ? (int)z : (int)z - 1);
-
-			double minDist = 32000000.0;
-
-			double xCandidate = 0;
-
-			double zCandidate = 0;
-
-			for (int zCur = zInt - 2; zCur <= zInt + 2; zCur++)
+			public int Y
 			{
-				for (int xCur = xInt - 2; xCur <= xInt + 2; xCur++)
+				get { return cellStartPoint.Y; }
+			}
+
+			// dimensions of Cell
+			private int width, height;
+
+			public int W
+			{
+				get { return width; }
+			}
+
+			public int H
+			{
+				get { return height; }
+			}
+
+			// Cell children
+			// Northwest Cell child
+			private Cell nw;
+			// Northeast Cell child
+			private Cell ne;
+			// Southeast Cell child
+			private Cell se;
+			// Southwest Cell child
+			private Cell sw;
+
+			// bool indicating Cell has children
+			// we could sit here and ask if all children are null, but
+			// the children are all made at the same time, so we only 
+			// really need to check if the first one has been made
+			public bool hasChildren
+			{
+				get { return (nw != null); }
+			}
+
+			// location of cellular noise point contained in cell
+			private Point point;
+
+			public Point NoisePoint
+			{
+				get { return point; }
+			}
+
+			public Cell(int xPos, int yPos, int width, int height)
+			{
+				cellStartPoint = new Point(xPos, yPos);
+				this.width = width;
+				this.height = height;
+			}
+
+			public void addPoint(Point newPoint)
+			{
+				if (hasChildren)
 				{
-					double xPos = xCur + valueNoise2D(xCur, zCur, seed);
+					int px = newPoint.X;
+					int py = newPoint.Y;
 
-					double zPos = zCur + valueNoise2D(xCur, zCur, new Random((int)seed).Next());
+					// local variables used to simplify child cell dimension declarations
+					int westWidth = W;
+					int northHeight = H;
 
-					double xDist = xPos - x;
-
-					double zDist = zPos - z;
-
-					double dist = xDist * xDist + zDist * zDist;
-
-					if (dist < minDist)
+					// set width of western cells based on parent's width
+					if (westWidth % 2 != 0)
 					{
-						minDist = dist;
-						xCandidate = xPos;
-						zCandidate = zPos;
+						westWidth = W / 2 + 1;
 					}
-				}
-			}
-
-			double xDistFinal = xCandidate - x;
-
-			double zDistFinal = zCandidate - z;
-
-			return getDistance(xDistFinal, zDistFinal);
-		}
-
-		public double noise(double x, double y, double z, double frequency)
-		{
-			x *= frequency;
-
-			y *= frequency;
-
-			z *= frequency;
-
-			int xInt = (x > .0 ? (int)x : (int)x - 1);
-
-			int yInt = (y > .0 ? (int)y : (int)y - 1);
-
-			int zInt = (z > .0 ? (int)z : (int)z - 1);
-
-			double minDist = 32000000.0;
-
-			double xCandidate = 0;
-
-			double yCandidate = 0;
-
-			double zCandidate = 0;
-
-			Random rand = new Random((int)seed);
-
-			for (int zCur = zInt - 2; zCur <= zInt + 2; zCur++)
-			{
-				for (int yCur = yInt - 2; yCur <= yInt + 2; yCur++)
-				{
-					for (int xCur = xInt - 2; xCur <= xInt + 2; xCur++)
+					else
 					{
-						double xPos = xCur + valueNoise3D(xCur, yCur, zCur, seed);
+						westWidth /= 2;
+					}
 
-						double yPos = yCur + valueNoise3D(xCur, yCur, zCur, rand.Next());
+					// set height of northern cells based on parent's height
+					if (northHeight % 2 != 0)
+					{
+						northHeight = H / 2 + 1;
+					}
+					else
+					{
+						northHeight /= 2;
+					}
 
-						double zPos = zCur + valueNoise3D(xCur, yCur, zCur, rand.Next());
-
-						double xDist = xPos - x;
-
-						double yDist = yPos - y;
-
-						double zDist = zPos - z;
-
-						double dist = xDist * xDist + yDist * yDist + zDist * zDist;
-
-						if (dist < minDist)
+					// if newPoint.x is less than the midway point of this cell, 
+					// it must be in the Western cells (wagon trails)
+					// else, it's in the Eastern cells (no elbow room)
+					if (px < X + westWidth)
+					{
+						// find north vs south
+						// if newPoint.y is less than the midway point of this cell,
+						// it must be in the Northern cells (darn yankee)
+						// else, it's in the Southern cells (dadgum!)
+						if (py < Y + northHeight)
 						{
-
-							minDist = dist;
-
-							xCandidate = xPos;
-
-							yCandidate = yPos;
-
-							zCandidate = zPos;
-
+							nw.addPoint(newPoint);
 						}
-
+						else
+						{
+							sw.addPoint(newPoint);
+						}
+					}
+					else
+					{
+						// find north vs south
+						// if newPoint.y is less than the midway point of this cell,
+						// it must be in the Northern cells (darn yankee)
+						// else, it's in the Southern cells (dadgum!)
+						if (py < Y + northHeight)
+						{
+							ne.addPoint(newPoint);
+						}
+						else
+						{
+							se.addPoint(newPoint);
+						}
 					}
 
+					// find which child it goes in
+					// se.addPoint(newPoint);
 				}
-
+				else if (NoisePoint != null)
+				{
+					subdivide();
+					addPoint(newPoint);
+				}
+				else
+				{
+					point = newPoint;
+				}
 			}
 
-			double xDistFinal = xCandidate - x;
+			public void subdivide()
+			{
+				// double check we're not overwriting existing children
+				if (hasChildren)
+				{
+					return;
+				}
 
-			double yDistFinal = yCandidate - y;
+				// if the width of the parent cell is odd, do the following dimension changes for child cells:
+				// 1. set all Western cells' widths to half the parent's width + 1
+				// if the height of the parent cell is odd, do the following dimension changes for child cells:
+				// 1. set all Northern cells' heights to half the parent's width + 1
+				// example: 
+				// parent cell's dimensions: 99W 67H
+				// NW: 50W 34H
+				// NE: 49W 34H
+				// SE: 49W 33H
+				// SW: 50W 33H
 
-			double zDistFinal = zCandidate - z;
+				// local variables used to simplify child cell dimension declarations
+				int westWidth = W;
+				int northHeight = H;
 
-			return getDistance(xDistFinal, yDistFinal, zDistFinal);
-		}
+				// set width of western cells based on parent's width
+				if (westWidth % 2 != 0)
+				{
+					westWidth = W / 2 + 1;
+				}
+				else
+				{
+					westWidth /= 2;
+				}
 
-		public void setDistanceMethod(short distanceMethod)
-		{
-			this.distanceMethod = distanceMethod;
-		}
+				// set height of northern cells based on parent's height
+				if (northHeight % 2 != 0)
+				{
+					northHeight = H / 2 + 1;
+				}
+				else
+				{
+					northHeight /= 2;
+				}
 
-		public void setSeed(long seed)
-		{
-			this.seed = seed;
-		}
+				nw = new Cell(X, Y, westWidth, northHeight);
 
-		public static double valueNoise2D(int x, int z, long seed)
-		{
-			long n = (1619 * x + 6971 * z + 1013 * seed) & 0x7fffffff;
+				ne = new Cell(X + W / 2, Y, W / 2, northHeight);
 
-			n = (n >> 13) ^ n;
+				se = new Cell(X + W / 2, Y + H / 2, W / 2, H / 2);
 
-			return 1.0 - ((double)((n * (n * n * 60493 + 19990303) + 1376312589) & 0x7fffffff) / 1073741824.0);
-		}
-
-		public static double valueNoise3D(int x, int y, int z, long seed)
-		{
-			long n = (1619 * x + 31337 * y + 6971 * z + 1013 * seed) & 0x7fffffff;
-
-			n = (n >> 13) ^ n;
-
-			return 1.0 - ((double)((n * (n * n * 60493 + 19990303) + 1376312589) & 0x7fffffff) / 1073741824.0);
+				sw = new Cell(X, Y + H / 2, westWidth, H / 2);
+			}
 		}
 	}
 }
