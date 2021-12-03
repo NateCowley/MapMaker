@@ -75,7 +75,7 @@ namespace MapMaker
 			new ColorValue(.999, Color.FromArgb(255, 255, 255)) // deeper land
 		};
 
-		public static Color getColorFromValue(double value, ColorTone ct, int gradientClarity)
+		public static Color assignColorFromValue(double value, ColorTone ct, int gradientClarity)
 		{
 			ColorValue[] scheme = defaultRange;
 

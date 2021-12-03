@@ -145,7 +145,7 @@ namespace MapMaker
 						pixels[i * Height + j] = new MapPixel(i, j, finalMap[i * Height + j]);
 					}
 
-					combinedBitmap.SetPixel(i, j, ColorScheme.getColorFromValue(finalMap[i * Height + j], ct, clarity));
+					combinedBitmap.SetPixel(i, j, ColorScheme.assignColorFromValue(finalMap[i * Height + j], ct, clarity));
 				}
 
 				if (pf != null)

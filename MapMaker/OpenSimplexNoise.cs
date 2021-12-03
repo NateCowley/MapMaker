@@ -2550,13 +2550,14 @@ namespace MapMaker
 
 			for (int i = 0; i < oct; i++)
 			{
-				double dx = x / scale * freq + seed + .1;
-				double dy = y / scale * freq + seed + .1;
-				double dz = z / scale * freq + seed + .1;
+				double dx = x / (scale / freq) + seed + .1;
+				double dy = y / (scale / freq) + seed + .1;
+				double dz = z / (scale / freq) + seed + .1;
 
-				total += noise(dx + .1, dy * -1 + .1, dz + .1, .19960427) * amp;
+				//total += noise(dx + .1, dy * -1 + .1, dz + .1, .19960427) * amp;
+				total += noise(dx + .1, dy * -1 + .1, dz + .1, dx / 3 + dy / 6 + dz / 9) * amp;
 
-				if((total <= 0.00000000001 && total >= -0.00000000001) || total == Double.NaN)
+				if ((total <= 0.00000000001 && total >= -0.00000000001) || total == Double.NaN)
 				{
 					seed /= 2 + 1;
 					this.setSeed(seed);

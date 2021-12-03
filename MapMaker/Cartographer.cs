@@ -10,19 +10,6 @@ using System.Windows.Forms;
 
 namespace MapMaker
 {
-	public enum Biome
-	{
-		CUSTOM,
-		ARCHIPELAGO_SUBTRACTIVE,
-		ARCHIPELAGO_GRADIENT,
-		ARCHIPELAGO_LERP,
-		CONTINENTS,
-		PLAINS,
-		MOUNTAINS,
-		DESERT,
-		ATOLL,
-	}
-
 	public partial class Cartographer : MapMaker
 	{
 		private double atollRadiusVar = 5.0;
@@ -30,13 +17,13 @@ namespace MapMaker
 
 		public Cartographer() : this(null)
 		{
-			biomeFunction = defaultNoise;
+
 		}
 
 		public Cartographer(CartographerOptionPanel mmop)
 		{
 			this.cop = mmop;
-			biomeFunction = defaultNoise;
+			setBiome(Biome.ARCHIPELAGO_GRADIENT);
 		}
 
 		public override Bitmap GenerateMap(int width, int height, ProgressForm pf = null)
@@ -71,7 +58,25 @@ namespace MapMaker
 				{
 					for(int j = 0; j < height; j++)
 					{
-						prevImage.SetPixel(i, j, ColorScheme.getColorFromValue(pixels[i * Height + j].Height, ct, clarity));
+						prevImage.SetPixel(i, j, ColorScheme.assignColorFromValue(pixels[i * Height + j].Height, ct, clarity));
+					}
+
+					if (pf != null)
+					{
+						pf.ProgressBarValue += Height;
+					}
+				}
+
+				return prevImage;
+			}
+			else if(onlyDifferentElevation())
+			{
+				for(int i = 0; i < Width; i++)
+				{
+					for(int j = 0; j < Height; j++)
+					{
+						pixels[i * Height + j].heightOffset = mapHeight * NORMALIZED_MAP_FOOT_REAL;
+						prevImage.SetPixel(i, j, ColorScheme.assignColorFromValue(pixels[i * Height + j].Height, ct, clarity));
 					}
 
 					if (pf != null)
@@ -116,12 +121,13 @@ namespace MapMaker
 					// get the current x and y
 					double dx = (double)((i) + xOffset) * .999999999999999;
 					double dy = (double)((j) + yOffset) * .999999999999999;
+					double dz = (double)((dx/2 + dy/4)) * .999999999999999;
 
 					// original method WORKS FINE
 					//double noise = ng.octaveNoise(dx * biomeVar, dy * biomeVar, .1996 * biomeVar, octaves, frequency,
 					//	lacunarity, amplitude, persistence, scale, seed);
 
-					double noise = ng.octaveNoise(dx, dy, .1996, octaves, frequency,
+					double noise = ng.octaveNoise(dx, dy, dz, octaves, frequency,
 						lacunarity, amplitude, persistence, scale, seed);
 
 					noise *= biomeVar;
@@ -156,13 +162,15 @@ namespace MapMaker
 					// after normalizing the noisemap value, adjust it to fit the biome
 					noiseMap[i, j] = biomeFunction(noiseMap[i, j], i, j);
 
+					pixels[i * Height + j] = new MapPixel(i, j, noiseMap[i, j], mapHeight * NORMALIZED_MAP_FOOT_REAL);
+
+					noiseMap[i, j] = pixels[i * Height + j].Height;
+
 					// set the pixel in the bitmap with the final value
-					bm.SetPixel(i, j, ColorScheme.getColorFromValue(noiseMap[i, j], ct, clarity));
+					bm.SetPixel(i, j, ColorScheme.assignColorFromValue(noiseMap[i, j], ct, clarity));
 
 					// save the final value of the pixel to print to log later
 					heightNums[i * Height + j] += noiseMap[i, j].ToString();
-
-					pixels[i * Height + j] = new MapPixel(i, j, noiseMap[i, j]);
 				}
 
 				if (pf != null)
@@ -199,6 +207,7 @@ namespace MapMaker
 			prevng = this.ng;
 			prevMiscGeneratorOptions = this.miscGeneratorOptions;
 			prevMiscBiomeOptions = this.miscBiomeOptions;
+			prevMapHeight = this.mapHeight;
 
 			setBiome(cop.biome);
 			seed = cop.seed;
@@ -210,12 +219,15 @@ namespace MapMaker
 			amplitude = cop.amplitude;
 			persistence = cop.persistence;
 			scale = cop.scale;
+			scale *= 10;
 			xOffset = cop.xOffset;
 			yOffset = cop.yOffset;
 			ng = cop.ng;
 			miscGeneratorOptions = cop.MiscGeneratorOptions;
 			miscBiomeOptions = cop.MiscBiomeOptions;
 			ng.setMiscOptions(miscGeneratorOptions);
+			mapHeight = cop.mapHeight;
+
 
 			if(biome == Biome.ATOLL)
 			{
@@ -254,6 +266,7 @@ namespace MapMaker
 				case Biome.ATOLL:
 					biomeFunction = atollNoise;
 					break;
+				case Biome.NO_BIOME:
 				default: // also Biome.CUSTOM/archipelago
 					biomeFunction = defaultNoise;
 					break;
@@ -428,6 +441,11 @@ namespace MapMaker
 			return (1 - t) * val1 + t * val2;
 		}
 
+		public double adjustElevation(double p, double h)
+		{
+			return p + (h * NORMALIZED_MAP_FOOT_REAL);
+		}
+
 		public static void writeToDebugFile(string output)
 		{
 			string fullPath = System.IO.Directory.GetCurrentDirectory() + "\\debugFile.log";
@@ -483,7 +501,8 @@ namespace MapMaker
 				xOffset == prevXOffset &&
 				yOffset == prevYOffset &&
 				ng == prevng &&
-				miscGeneratorOptions.Length == prevMiscGeneratorOptions.Length
+				miscGeneratorOptions.Length == prevMiscGeneratorOptions.Length && 
+				mapHeight == prevMapHeight
 			)
 			{
 				for(int i = 0; i < prevMiscGeneratorOptions.Length; i++)
@@ -517,7 +536,43 @@ namespace MapMaker
 				yOffset == prevYOffset &&
 				ng == prevng &&
 				miscGeneratorOptions.Length == prevMiscGeneratorOptions.Length &&
-				ct != prevct
+				ct != prevct && 
+				mapHeight == prevMapHeight
+			)
+			{
+				for (int i = 0; i < prevMiscGeneratorOptions.Length; i++)
+				{
+					if (prevMiscGeneratorOptions[i] != miscGeneratorOptions[i])
+					{
+						return false;
+					}
+				}
+
+				return true;
+			}
+
+			return false;
+		}
+
+		private bool onlyDifferentElevation()
+		{
+			if
+			(
+				biome == prevBiome &&
+				seed == prevSeed &&
+				octaves == prevOctaves &&
+				clarity == prevClarity &&
+				lacunarity == prevLacunarity &&
+				frequency == prevFrequency &&
+				amplitude == prevAmplitude &&
+				persistence == prevPersistence &&
+				scale == prevScale &&
+				xOffset == prevXOffset &&
+				yOffset == prevYOffset &&
+				ng == prevng &&
+				miscGeneratorOptions.Length == prevMiscGeneratorOptions.Length &&
+				ct == prevct &&
+				mapHeight != prevMapHeight
 			)
 			{
 				for (int i = 0; i < prevMiscGeneratorOptions.Length; i++)

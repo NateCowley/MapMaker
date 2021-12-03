@@ -49,8 +49,9 @@
 			this.printBitmapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.printThirdValueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-			this.cartographerOptionPanel = new CartographerOptionPanel();
-			this.mapCombinatorOptionPanel = new MapCombinatorOptionPanel();
+			this.cartographerOptionPanel = new MapMaker.CartographerOptionPanel();
+			this.mapCombinatorOptionPanel = new MapMaker.MapCombinatorOptionPanel();
+			this.colorSchemeMakerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.mapImagePB)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -80,7 +81,8 @@
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.mapToolStripMenuItem,
-            this.debugToolStripMenuItem});
+            this.debugToolStripMenuItem,
+            this.colorSchemeMakerToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(711, 24);
@@ -210,6 +212,12 @@
 			this.mapCombinatorOptionPanel.Size = new System.Drawing.Size(200, 452);
 			this.mapCombinatorOptionPanel.TabIndex = 40;
 			// 
+			// colorSchemeMakerToolStripMenuItem
+			// 
+			this.colorSchemeMakerToolStripMenuItem.Name = "colorSchemeMakerToolStripMenuItem";
+			this.colorSchemeMakerToolStripMenuItem.Size = new System.Drawing.Size(123, 20);
+			this.colorSchemeMakerToolStripMenuItem.Text = "ColorSchemeMaker";
+			// 
 			// PrimaryScreen
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -254,6 +262,7 @@
 		private CartographerOptionPanel cartographerOptionPanel;
 		private System.Windows.Forms.ToolStripMenuItem createMapsToolStripMenuItem;
 		private MapCombinatorOptionPanel mapCombinatorOptionPanel;
+		private System.Windows.Forms.ToolStripMenuItem colorSchemeMakerToolStripMenuItem;
 	}
 }
 

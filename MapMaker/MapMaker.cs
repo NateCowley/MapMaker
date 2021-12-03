@@ -27,6 +27,7 @@ namespace MapMaker
 		protected double width;
 		protected double height;
 		protected delegate double AlterNoise(double noise, int x, int y);
+		public double mapHeight;
 
 		// these are save variables used to keep us from completely
 		// regenerating the map if we're just doing a recolor
@@ -47,6 +48,7 @@ namespace MapMaker
 		public NoiseGenerator prevng;
 		public double[] prevMiscGeneratorOptions;
 		public double[] prevMiscBiomeOptions;
+		public double prevMapHeight;
 
 		protected double midHeight = 0.49;
 		protected double biomeVar = 1.0;
@@ -67,7 +69,7 @@ namespace MapMaker
 		/// </summary>
 		public static readonly double NORMALIZED_MIN = 0.0;
 		/// <summary>
-		/// The height value possible once normalized
+		/// The heighest value possible once normalized
 		/// </summary>
 		public static readonly double NORMALIZED_MAX = 1.0;
 

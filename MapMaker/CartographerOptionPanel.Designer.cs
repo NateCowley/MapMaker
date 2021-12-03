@@ -61,12 +61,15 @@
 			this.atollRadiusTB = new System.Windows.Forms.TextBox();
 			this.genRandSeedCB = new System.Windows.Forms.CheckBox();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this.randomSeedButton = new System.Windows.Forms.Button();
+			this.label4 = new System.Windows.Forms.Label();
+			this.heightChangeTB = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
 			// numPointsLabel
 			// 
 			this.numPointsLabel.AutoSize = true;
-			this.numPointsLabel.Location = new System.Drawing.Point(1, 510);
+			this.numPointsLabel.Location = new System.Drawing.Point(1, 531);
 			this.numPointsLabel.Name = "numPointsLabel";
 			this.numPointsLabel.Size = new System.Drawing.Size(88, 13);
 			this.numPointsLabel.TabIndex = 60;
@@ -75,7 +78,7 @@
 			// 
 			// numPointsTB
 			// 
-			this.numPointsTB.Location = new System.Drawing.Point(4, 529);
+			this.numPointsTB.Location = new System.Drawing.Point(4, 550);
 			this.numPointsTB.Name = "numPointsTB";
 			this.numPointsTB.Size = new System.Drawing.Size(160, 20);
 			this.numPointsTB.TabIndex = 59;
@@ -91,7 +94,7 @@
 			this.lacunarityLabel.TabIndex = 58;
 			this.lacunarityLabel.Text = "Lacunarity";
 			this.toolTip1.SetToolTip(this.lacunarityLabel, "Lacunarity determines how much detail is added or removed at each octave (adjusts" +
-		" frequency).");
+        " frequency).");
 			// 
 			// lacunarityTB
 			// 
@@ -101,7 +104,7 @@
 			this.lacunarityTB.TabIndex = 57;
 			this.lacunarityTB.Text = "2.0";
 			this.toolTip1.SetToolTip(this.lacunarityTB, "Lacunarity determines how much detail is added or removed at each octave (adjusts" +
-		" frequency).");
+        " frequency).");
 			// 
 			// clarityLabel
 			// 
@@ -112,8 +115,8 @@
 			this.clarityLabel.TabIndex = 56;
 			this.clarityLabel.Text = "Clarity";
 			this.toolTip1.SetToolTip(this.clarityLabel, "Clarity is the amount of times the color scheme is subdivided. A clarity of 1 mea" +
-		"ns there is no subdivision. Higher clarity makes for smoother colors between hei" +
-		"ght levels.");
+        "ns there is no subdivision. Higher clarity makes for smoother colors between hei" +
+        "ght levels.");
 			// 
 			// clarityTB
 			// 
@@ -123,8 +126,8 @@
 			this.clarityTB.TabIndex = 55;
 			this.clarityTB.Text = "1";
 			this.toolTip1.SetToolTip(this.clarityTB, "Clarity is the amount of times the color scheme is subdivided. A clarity of 1 mea" +
-		"ns there is no subdivision. Higher clarity makes for smoother colors between hei" +
-		"ght levels.");
+        "ns there is no subdivision. Higher clarity makes for smoother colors between hei" +
+        "ght levels.");
 			// 
 			// scaleLabel
 			// 
@@ -142,7 +145,7 @@
 			this.scaleTB.Name = "scaleTB";
 			this.scaleTB.Size = new System.Drawing.Size(160, 20);
 			this.scaleTB.TabIndex = 53;
-			this.scaleTB.Text = "25";
+			this.scaleTB.Text = "100";
 			this.toolTip1.SetToolTip(this.scaleTB, "Determines the scale of the map. A lower scale means a more \"zoomed out\" image.");
 			// 
 			// persistenceLabel
@@ -177,7 +180,7 @@
 			// yOffsetLabel
 			// 
 			this.yOffsetLabel.AutoSize = true;
-			this.yOffsetLabel.Location = new System.Drawing.Point(1, 469);
+			this.yOffsetLabel.Location = new System.Drawing.Point(1, 490);
 			this.yOffsetLabel.Name = "yOffsetLabel";
 			this.yOffsetLabel.Size = new System.Drawing.Size(45, 13);
 			this.yOffsetLabel.TabIndex = 50;
@@ -186,7 +189,7 @@
 			// 
 			// yOffsetTB
 			// 
-			this.yOffsetTB.Location = new System.Drawing.Point(4, 486);
+			this.yOffsetTB.Location = new System.Drawing.Point(4, 507);
 			this.yOffsetTB.Name = "yOffsetTB";
 			this.yOffsetTB.Size = new System.Drawing.Size(160, 20);
 			this.yOffsetTB.TabIndex = 49;
@@ -196,7 +199,7 @@
 			// xOffsetLabel
 			// 
 			this.xOffsetLabel.AutoSize = true;
-			this.xOffsetLabel.Location = new System.Drawing.Point(1, 427);
+			this.xOffsetLabel.Location = new System.Drawing.Point(1, 448);
 			this.xOffsetLabel.Name = "xOffsetLabel";
 			this.xOffsetLabel.Size = new System.Drawing.Size(45, 13);
 			this.xOffsetLabel.TabIndex = 48;
@@ -205,7 +208,7 @@
 			// 
 			// xOffsetTB
 			// 
-			this.xOffsetTB.Location = new System.Drawing.Point(4, 444);
+			this.xOffsetTB.Location = new System.Drawing.Point(4, 465);
 			this.xOffsetTB.Name = "xOffsetTB";
 			this.xOffsetTB.Size = new System.Drawing.Size(160, 20);
 			this.xOffsetTB.TabIndex = 47;
@@ -216,7 +219,7 @@
 			// 
 			this.seedTB.Location = new System.Drawing.Point(4, 402);
 			this.seedTB.Name = "seedTB";
-			this.seedTB.Size = new System.Drawing.Size(160, 20);
+			this.seedTB.Size = new System.Drawing.Size(109, 20);
 			this.seedTB.TabIndex = 44;
 			this.toolTip1.SetToolTip(this.seedTB, "Determines the pattern of the map.");
 			// 
@@ -229,7 +232,7 @@
 			this.frequencyLabel.TabIndex = 43;
 			this.frequencyLabel.Text = "Frequency";
 			this.toolTip1.SetToolTip(this.frequencyLabel, "Frequency determines the number of small details on the map. Increasing the frequ" +
-		"ency increases the amount and decreases the size of details.");
+        "ency increases the amount and decreases the size of details.");
 			// 
 			// frequencyTB
 			// 
@@ -239,7 +242,7 @@
 			this.frequencyTB.TabIndex = 42;
 			this.frequencyTB.Text = "32";
 			this.toolTip1.SetToolTip(this.frequencyTB, "Frequency determines the number of small details on the map. Increasing the frequ" +
-		"ency increases the amount and decreases the size of details.");
+        "ency increases the amount and decreases the size of details.");
 			// 
 			// octaveLabel
 			// 
@@ -250,7 +253,7 @@
 			this.octaveLabel.TabIndex = 41;
 			this.octaveLabel.Text = "Octaves";
 			this.toolTip1.SetToolTip(this.octaveLabel, "Octaves determine the largescale amount of details on the map. The higher the oct" +
-		"ave count, the more the details there will be.");
+        "ave count, the more the details there will be.");
 			// 
 			// octaveTB
 			// 
@@ -260,7 +263,7 @@
 			this.octaveTB.TabIndex = 40;
 			this.octaveTB.Text = "4";
 			this.toolTip1.SetToolTip(this.octaveTB, "Octaves determine the largescale amount of details on the map. The higher the oct" +
-		"ave count, the more the details there will be.");
+        "ave count, the more the details there will be.");
 			// 
 			// label1
 			// 
@@ -281,7 +284,7 @@
 			this.label2.TabIndex = 64;
 			this.label2.Text = "Biome";
 			this.toolTip1.SetToolTip(this.label2, "The biome will adjust the final outcome of the map. Certain biomes will disable m" +
-		"ap continuity.");
+        "ap continuity.");
 			// 
 			// label3
 			// 
@@ -297,9 +300,9 @@
 			// 
 			this.generatorTypeCB.FormattingEnabled = true;
 			this.generatorTypeCB.Items.AddRange(new object[] {
-			"Simplex Noise",
-			"Improved Noise",
-			"Worley Noise"});
+            "Simplex Noise",
+            "Improved Noise",
+            "Worley Noise"});
 			this.generatorTypeCB.Location = new System.Drawing.Point(4, 19);
 			this.generatorTypeCB.Name = "generatorTypeCB";
 			this.generatorTypeCB.Size = new System.Drawing.Size(160, 21);
@@ -311,9 +314,9 @@
 			// 
 			this.colorSchemeCB.FormattingEnabled = true;
 			this.colorSchemeCB.Items.AddRange(new object[] {
-			"Default",
-			"Sepia",
-			"Black and White"});
+            "Default",
+            "Sepia",
+            "Black and White"});
 			this.colorSchemeCB.Location = new System.Drawing.Point(3, 105);
 			this.colorSchemeCB.Name = "colorSchemeCB";
 			this.colorSchemeCB.Size = new System.Drawing.Size(160, 21);
@@ -325,28 +328,29 @@
 			// 
 			this.biomeCB.FormattingEnabled = true;
 			this.biomeCB.Items.AddRange(new object[] {
-			"Continents",
-			"Plains",
-			"Mountains",
-			"Desert",
-			"Archipelago",
-			"Atoll"});
+            "Archipelago",
+            "Atoll",
+            "Continents",
+            "Desert",
+            "Mountains",
+            "Plains",
+            "No Biome"});
 			this.biomeCB.Location = new System.Drawing.Point(4, 62);
 			this.biomeCB.Name = "biomeCB";
 			this.biomeCB.Size = new System.Drawing.Size(160, 21);
 			this.biomeCB.TabIndex = 67;
 			this.toolTip1.SetToolTip(this.biomeCB, "The biome will adjust the final outcome of the map. Certain biomes will disable m" +
-		"ap continuity.");
+        "ap continuity.");
 			this.biomeCB.SelectedIndexChanged += new System.EventHandler(this.biomeCB_SelectedIndexChanged);
 			// 
 			// archipelagoMethodCB
 			// 
 			this.archipelagoMethodCB.FormattingEnabled = true;
 			this.archipelagoMethodCB.Items.AddRange(new object[] {
-			"Subtractive",
-			"Gradient",
-			"Linear Interpolation"});
-			this.archipelagoMethodCB.Location = new System.Drawing.Point(4, 568);
+            "Gradient",
+            "Linear Interpolation",
+            "Subtractive"});
+			this.archipelagoMethodCB.Location = new System.Drawing.Point(4, 589);
 			this.archipelagoMethodCB.Name = "archipelagoMethodCB";
 			this.archipelagoMethodCB.Size = new System.Drawing.Size(160, 21);
 			this.archipelagoMethodCB.TabIndex = 69;
@@ -356,7 +360,7 @@
 			// archipelagoMethodLabel
 			// 
 			this.archipelagoMethodLabel.AutoSize = true;
-			this.archipelagoMethodLabel.Location = new System.Drawing.Point(3, 552);
+			this.archipelagoMethodLabel.Location = new System.Drawing.Point(3, 573);
 			this.archipelagoMethodLabel.Name = "archipelagoMethodLabel";
 			this.archipelagoMethodLabel.Size = new System.Drawing.Size(102, 13);
 			this.archipelagoMethodLabel.TabIndex = 68;
@@ -366,41 +370,75 @@
 			// atollRadiusLabel
 			// 
 			this.atollRadiusLabel.AutoSize = true;
-			this.atollRadiusLabel.Location = new System.Drawing.Point(3, 592);
+			this.atollRadiusLabel.Location = new System.Drawing.Point(3, 613);
 			this.atollRadiusLabel.Name = "atollRadiusLabel";
 			this.atollRadiusLabel.Size = new System.Drawing.Size(63, 13);
 			this.atollRadiusLabel.TabIndex = 71;
 			this.atollRadiusLabel.Text = "Atoll Radius";
 			this.toolTip1.SetToolTip(this.atollRadiusLabel, "Determines how far out from the center of the map the center of the atoll will be" +
-		".");
+        ".");
 			// 
 			// atollRadiusTB
 			// 
-			this.atollRadiusTB.Location = new System.Drawing.Point(4, 608);
+			this.atollRadiusTB.Location = new System.Drawing.Point(4, 629);
 			this.atollRadiusTB.Name = "atollRadiusTB";
 			this.atollRadiusTB.Size = new System.Drawing.Size(160, 20);
 			this.atollRadiusTB.TabIndex = 70;
 			this.atollRadiusTB.Text = "5";
 			this.toolTip1.SetToolTip(this.atollRadiusTB, "Determines how far out from the center of the map the center of the atoll will be" +
-		".");
+        ".");
 			// 
 			// genRandSeedCB
 			// 
 			this.genRandSeedCB.AutoSize = true;
-			this.genRandSeedCB.Location = new System.Drawing.Point(6, 634);
+			this.genRandSeedCB.Location = new System.Drawing.Point(4, 428);
 			this.genRandSeedCB.Name = "genRandSeedCB";
-			this.genRandSeedCB.Size = new System.Drawing.Size(134, 17);
+			this.genRandSeedCB.Size = new System.Drawing.Size(168, 17);
 			this.genRandSeedCB.TabIndex = 72;
-			this.genRandSeedCB.Text = "Generate random seed";
+			this.genRandSeedCB.Text = "Always generate random seed";
 			this.toolTip1.SetToolTip(this.genRandSeedCB, "When selected, it automatically generates a new seed when you press \"Generate map" +
-		"\"");
+        "\"");
 			this.genRandSeedCB.UseVisualStyleBackColor = true;
+			// 
+			// randomSeedButton
+			// 
+			this.randomSeedButton.Location = new System.Drawing.Point(109, 401);
+			this.randomSeedButton.Name = "randomSeedButton";
+			this.randomSeedButton.Size = new System.Drawing.Size(55, 21);
+			this.randomSeedButton.TabIndex = 73;
+			this.randomSeedButton.Text = "Random";
+			this.randomSeedButton.UseVisualStyleBackColor = true;
+			this.randomSeedButton.Click += new System.EventHandler(this.randomSeedButton_Click);
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(3, 652);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(78, 13);
+			this.label4.TabIndex = 75;
+			this.label4.Text = "Height Change";
+			this.toolTip1.SetToolTip(this.label4, "Determines how far out from the center of the map the center of the atoll will be" +
+        ".");
+			// 
+			// heightChangeTB
+			// 
+			this.heightChangeTB.Location = new System.Drawing.Point(4, 668);
+			this.heightChangeTB.Name = "heightChangeTB";
+			this.heightChangeTB.Size = new System.Drawing.Size(160, 20);
+			this.heightChangeTB.TabIndex = 74;
+			this.heightChangeTB.Text = "0";
+			this.toolTip1.SetToolTip(this.heightChangeTB, "Determines how far out from the center of the map the center of the atoll will be" +
+        ".");
 			// 
 			// CartographerOptionPanel
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoScroll = true;
+			this.Controls.Add(this.label4);
+			this.Controls.Add(this.heightChangeTB);
+			this.Controls.Add(this.randomSeedButton);
 			this.Controls.Add(this.genRandSeedCB);
 			this.Controls.Add(this.atollRadiusLabel);
 			this.Controls.Add(this.atollRadiusTB);
@@ -433,7 +471,7 @@
 			this.Controls.Add(this.octaveLabel);
 			this.Controls.Add(this.octaveTB);
 			this.Name = "CartographerOptionPanel";
-			this.Size = new System.Drawing.Size(193, 725);
+			this.Size = new System.Drawing.Size(193, 814);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -473,5 +511,8 @@
 		private System.Windows.Forms.TextBox atollRadiusTB;
 		private System.Windows.Forms.CheckBox genRandSeedCB;
 		private System.Windows.Forms.ToolTip toolTip1;
+		private System.Windows.Forms.Button randomSeedButton;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.TextBox heightChangeTB;
 	}
 }

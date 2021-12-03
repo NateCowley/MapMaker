@@ -15,22 +15,23 @@ namespace MapMaker
 		public int clarity = 1;
 		public int octaves = 1;
 		public int seed = 0;
-		public double scale = .15;
+		public double scale = 25;
 		public double persistence = .35;
 		public double xOffset = 0, yOffset = 0;
 		public double frequency = 1, amplitude = 1;
 		public double lacunarity = 2.0;
 		public double plainsValue = 1.0;
 		public ColorTone ct = ColorTone.DEFAULT;
-		public Biome biome = Biome.CONTINENTS;
+		public Biome biome = Biome.ARCHIPELAGO_GRADIENT;
 		public NoiseGenerator ng;
 		private double[] miscGeneratorOptions;
 		private double[] miscBiomeOptions;
 		public int width;
 		public int height;
+		public double mapHeight;
 
 		public bool usingWorleyNoise = false;
-		public bool usingArchipelago = false;
+		public bool usingArchipelago = true;
 		public bool usingAtoll = false;
 
 		public bool generateRandomSeed
@@ -72,7 +73,7 @@ namespace MapMaker
 			setBiome(biomeCB.SelectedIndex);
 
 			setWorleyEnabled(false);
-			setArchipelagoMethodEnabled(false);
+			setArchipelagoMethodEnabled(true);
 			setAtollEnabled(false);
 		}
 
@@ -125,27 +126,30 @@ namespace MapMaker
 			setArchipelagoMethodEnabled(false);
 			setAtollEnabled(false);
 
-			switch(num)
+			switch (num)
 			{
-				case 0: // continents
+				case 0: // archipelago
+					biome = Biome.ARCHIPELAGO_SUBTRACTIVE;
+					setArchipelagoMethodEnabled(true);
+					break;
+				case 1: // atoll
+					biome = Biome.ATOLL;
+					setAtollEnabled(true);
+					break;
+				case 2: // continents
 					biome = Biome.CONTINENTS;
-					break;
-				case 1: // plains
-					biome = Biome.PLAINS;
-					break;
-				case 2: // mountains
-					biome = Biome.MOUNTAINS;
 					break;
 				case 3: // desert
 					biome = Biome.DESERT;
 					break;
-				case 4: // archipelago
-					biome = Biome.ARCHIPELAGO_SUBTRACTIVE;
-					setArchipelagoMethodEnabled(true);
+				case 4: // mountains
+					biome = Biome.MOUNTAINS;
 					break;
-				case 5: // atoll
-					biome = Biome.ATOLL;
-					setAtollEnabled(true);
+				case 5: // plains
+					biome = Biome.PLAINS;
+					break;
+				case 6: // no biome (raw)
+					biome = Biome.NO_BIOME;
 					break;
 			}
 		}
@@ -154,14 +158,14 @@ namespace MapMaker
 		{
 			switch (num)
 			{
-				case 0: // subtractive
-					biome = Biome.ARCHIPELAGO_SUBTRACTIVE;
-					break;
-				case 1: // gradient
+				case 0: // gradient
 					biome = Biome.ARCHIPELAGO_GRADIENT;
 					break;
-				case 2: // linear interpolation
+				case 1: // linear interpolation
 					biome = Biome.ARCHIPELAGO_LERP;
+					break;
+				case 2: // subtractive
+					biome = Biome.ARCHIPELAGO_SUBTRACTIVE;
 					break;
 			}
 		}
@@ -192,7 +196,7 @@ namespace MapMaker
 				seedTB.Text = new Random().Next().ToString();
 			}
 
-			bool[] res = new bool[9];
+			bool[] res = new bool[10];
 			res[0] = Int32.TryParse(octaveTB.Text, out octaves);
 			res[1] = Int32.TryParse(seedTB.Text, out seed);
 			res[2] = Int32.TryParse(clarityTB.Text, out clarity);
@@ -202,7 +206,8 @@ namespace MapMaker
 			res[6] = Double.TryParse(persistenceTB.Text, out persistence);
 			res[7] = Double.TryParse(lacunarityTB.Text, out lacunarity);
 			res[8] = Double.TryParse(scaleTB.Text, out scale);
-			scale *= 100;
+			res[9] = Double.TryParse(heightChangeTB.Text, out mapHeight);
+			//scale *= 100;
 
 			miscGeneratorOptions = new double[1];
 			miscGeneratorOptions[0] = 0.0;
@@ -249,7 +254,7 @@ namespace MapMaker
 				miscBiomeOptions[0] = r;
 			}
 
-			return (res[0] && res[1] && res[2] && res[3] && res[4] && res[5] && res[6] && res[7] && res[8]);
+			return (res[0] && res[1] && res[2] && res[3] && res[4] && res[5] && res[6] && res[7] && res[8] && res[9]);
 		}
 
 		public void setWorleyEnabled(bool val)
@@ -271,6 +276,12 @@ namespace MapMaker
 			usingAtoll = val;
 			atollRadiusLabel.Enabled = val;
 			atollRadiusTB.Enabled = val;
+		}
+
+		private void randomSeedButton_Click(object sender, EventArgs e)
+		{
+			Random r = new Random();
+			setSeed(r.Next());
 		}
 
 		public void setSeed(int seed)

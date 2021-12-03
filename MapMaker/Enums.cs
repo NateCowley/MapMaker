@@ -15,4 +15,18 @@ namespace MapMaker
 	{
 		WORLEY = 3,
 	}
+
+	public enum Biome
+	{
+		CUSTOM,
+		ARCHIPELAGO_SUBTRACTIVE,
+		ARCHIPELAGO_GRADIENT,
+		ARCHIPELAGO_LERP,
+		CONTINENTS,
+		PLAINS,
+		MOUNTAINS,
+		DESERT,
+		ATOLL,
+		NO_BIOME,
+	}
 }
