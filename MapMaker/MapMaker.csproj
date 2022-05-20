@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CellPoint.cs" />
     <Compile Include="ColorScheme.cs" />
     <Compile Include="ColorSchemeMaker.cs">
       <SubType>Form</SubType>
@@ -79,6 +80,7 @@
     </Compile>
     <Compile Include="ImprovedNoise.cs" />
     <Compile Include="Cartographer.cs" />
+    <Compile Include="QuadTree.cs" />
     <Compile Include="WorleyNoise.cs" />
     <Compile Include="NoiseGenerator.cs" />
     <Compile Include="PermutationTable.cs" />

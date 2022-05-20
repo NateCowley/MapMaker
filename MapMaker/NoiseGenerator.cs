@@ -46,7 +46,7 @@ namespace MapMaker
 
 		public NoiseGenerator()
 		{
-
+			
 		}
 
 		protected static int[] getPermutation()
