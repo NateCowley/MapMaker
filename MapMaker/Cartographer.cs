@@ -23,7 +23,8 @@ namespace MapMaker
 		public Cartographer(CartographerOptionPanel mmop)
 		{
 			this.cop = mmop;
-			setBiome(Biome.ARCHIPELAGO_GRADIENT);
+			setBiome(Biome.NO_BIOME);
+			
 		}
 
 		public override Bitmap GenerateMap(int width, int height, ProgressForm pf = null)

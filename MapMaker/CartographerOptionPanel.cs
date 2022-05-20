@@ -62,7 +62,7 @@ namespace MapMaker
 			seedTB.Text = r.Next().ToString();
 
 			generatorTypeCB.SelectedIndex = 0;
-			biomeCB.SelectedIndex = 0;
+			biomeCB.SelectedIndex = 6;
 			colorSchemeCB.SelectedIndex = 0;
 			archipelagoMethodCB.SelectedIndex = 0;
 
