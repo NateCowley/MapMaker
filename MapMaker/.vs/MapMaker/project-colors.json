@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "bf078cbb-b0a9-40fa-8986-447a0b305766": {
+      "ProjectGuid": "bf078cbb-b0a9-40fa-8986-447a0b305766",
+      "DisplayName": "MapMaker",
+      "ColorIndex": 0
+    },
+    "0d27b6ca-70ae-4f29-a17a-641ea6c14bdb": {
+      "ProjectGuid": "0d27b6ca-70ae-4f29-a17a-641ea6c14bdb",
+      "DisplayName": "MapMaker_V2",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}

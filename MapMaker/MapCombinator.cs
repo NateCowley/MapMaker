@@ -14,7 +14,8 @@ namespace MapMaker
 	public enum CombinatorMethod
 	{
 		ADDITIVE = 0,
-		SUBTRACTIVE,
+		SUBTRACTIVE_B_FROM_A,
+		SUBTRACTIVE_A_FROM_B,
 		MULTIPLICATIVE,
 		MIN,
 		MAX,
@@ -164,8 +165,11 @@ namespace MapMaker
 				case CombinatorMethod.ADDITIVE:
 					comboFunc = additive;
 					break;
-				case CombinatorMethod.SUBTRACTIVE:
-					comboFunc = subtractive;
+				case CombinatorMethod.SUBTRACTIVE_B_FROM_A:
+					comboFunc = subtractiveBFromA;
+					break;
+				case CombinatorMethod.SUBTRACTIVE_A_FROM_B:
+					comboFunc = subtractiveAFromB;
 					break;
 				case CombinatorMethod.MULTIPLICATIVE:
 					comboFunc = multiplicative;
@@ -187,10 +191,15 @@ namespace MapMaker
 			return a + b;
 		}
 
-		private double subtractive(double a, double b)
+		private double subtractiveBFromA(double a, double b)
 		{
 			return a - b;
 		}
+
+		private double subtractiveAFromB(double a, double b)
+        {
+			return b - a;
+        }
 
 		private double multiplicative(double a, double b)
 		{

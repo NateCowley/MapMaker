@@ -123,6 +123,13 @@ namespace MapMaker
 					double dy = (double)((j) + yOffset) * .999999999999999;
 					double dz = (double)((dx/2 + dy/4)) * .999999999999999;
 
+					if(cop.usingWorleyNoise)
+                    {
+						dx = i;
+						dy = j;
+						dz = 9;
+                    }
+
 					// original method WORKS FINE
 					//double noise = ng.octaveNoise(dx * biomeVar, dy * biomeVar, .1996 * biomeVar, octaves, frequency,
 					//	lacunarity, amplitude, persistence, scale, seed);
