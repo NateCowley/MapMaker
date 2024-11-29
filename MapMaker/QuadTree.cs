@@ -18,24 +18,39 @@ namespace MapMaker
 			root = new Cell(0, 0, mapWidth, mapHeight);
 		}
 
-		public void addPoint(Point newPoint)
+		public void addPoint(int x, int y)
 		{
 			if (root != null)
 			{
-				root.addPoint(newPoint);
+				root.addPoint(new QuadPoint(x, y));
 			}
 		}
 
+		public void drawCells(Graphics g)
+        {
+			if(root != null)
+            {
+				root.drawCell(g);
+            }
+        }
+
+		// Cells are the squares on the grid (of the quadtree). Not to be confused with points, which are individual points/pixels
 		private class Cell
 		{
 			// upper-left hand corner of Cell
-			private Point cellStartPoint;
+			private QuadPoint cellStartPoint;
 
+			/// <summary>
+			/// The X coordinate of the upper-left hand corner of the cell
+			/// </summary>
 			public int X
 			{
 				get { return cellStartPoint.X; }
 			}
 
+			/// <summary>
+			/// The Y coordinate of the upper-left hand corner of the cell
+			/// </summary>
 			public int Y
 			{
 				get { return cellStartPoint.Y; }
@@ -44,11 +59,17 @@ namespace MapMaker
 			// dimensions of Cell
 			private int width, height;
 
+			/// <summary>
+			/// The Width of the cell
+			/// </summary>
 			public int W
 			{
 				get { return width; }
 			}
 
+			/// <summary>
+			/// The Height of the cell
+			/// </summary>
 			public int H
 			{
 				get { return height; }
@@ -74,32 +95,29 @@ namespace MapMaker
 			}
 
 			// location of cellular noise point contained in cell
-			private Point point;
+			private QuadPoint quadPoint;
 
-			public Point NoisePoint
+			/// <summary>
+			/// The publicly available QuadPoint that exists within this cell
+			/// </summary>
+			public QuadPoint CellPoint
 			{
-				get { return point; }
+				get { return quadPoint; }
 			}
 
 			public Cell(int xPos, int yPos, int width, int height)
 			{
-				cellStartPoint = new Point(xPos, yPos);
+				cellStartPoint = new QuadPoint(xPos, yPos);
 				this.width = width;
 				this.height = height;
 			}
 
-			public void addPoint(Point newPoint)
+			public void addPoint(QuadPoint newPoint)
 			{
 				if (hasChildren)
 				{
 					int px = newPoint.X;
 					int py = newPoint.Y;
-
-					// if the new point has the same x and y coordinate as this cell's x and y, do not add the new point
-					if (px == X && py == Y)
-                    {
-						return;
-                    }
 
 					// local variables used to simplify child cell dimension declarations
 					int westWidth = W;
@@ -162,14 +180,22 @@ namespace MapMaker
 					// find which child it goes in
 					// se.addPoint(newPoint);
 				}
-				else if (NoisePoint != null)
+				else if (CellPoint != null)
 				{
+					if(newPoint.X == CellPoint.X && newPoint.Y == CellPoint.Y)
+                    {
+						return;
+                    }
+
 					subdivide();
 					addPoint(newPoint);
+					QuadPoint temp = quadPoint;
+					quadPoint = null;
+					addPoint(temp);
 				}
 				else
 				{
-					point = newPoint;
+					quadPoint = newPoint;
 				}
 			}
 
@@ -224,6 +250,24 @@ namespace MapMaker
 
 				sw = new Cell(X, Y + H / 2, westWidth, H / 2);
 			}
+
+			public void drawCell(Graphics g)
+            {
+				g.DrawRectangle(new Pen(Color.Red), X, Y, width, height);
+
+				if(CellPoint != null)
+                {
+					g.DrawRectangle(new Pen(Color.Blue), CellPoint.X, CellPoint.Y, 1, 1);
+                }
+
+				if(hasChildren)
+                {
+					nw.drawCell(g);
+					ne.drawCell(g);
+					se.drawCell(g);
+					sw.drawCell(g);
+                }
+            }
 		}
 	}
 }

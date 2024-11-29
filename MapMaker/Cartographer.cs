@@ -24,7 +24,6 @@ namespace MapMaker
 		{
 			this.cop = mmop;
 			setBiome(Biome.NO_BIOME);
-			
 		}
 
 		public override Bitmap GenerateMap(int width, int height, ProgressForm pf = null)
@@ -412,7 +411,17 @@ namespace MapMaker
 
 		public double continentsNoise(double noise, int x, int y)
 		{
-			return noise;
+			// angle between points = arctan y / x
+			double centerX = width / 2;
+			double centerY = height / 2;
+
+			double distanceToCenter = Math.Sqrt(Math.Pow(x - centerX, 2) + Math.Pow(y - centerY, 2));
+
+			double maxDistanceFromCenter = Math.Sqrt(centerX * centerX + centerY * centerY);
+
+			double distancePercentage = distanceToCenter / (maxDistanceFromCenter * 1);
+
+			return noise * lerp(NORMALIZED_MAX, NORMALIZED_MIN, distancePercentage-.25);
 		}
 
 		public double plainsNoise(double noise, int x, int y)
@@ -429,7 +438,16 @@ namespace MapMaker
 
 		public double desertNoise(double noise, int x, int y)
 		{
-			return noise;
+			double midpoint = NORMALIZED_MAX * .5;
+
+			if(noise > midpoint)
+            {
+				return noise - noise * .25;
+            }
+			else
+            {
+				return noise + noise * .5;
+            }
 		}
 
 		public double defaultNoise(double noise, int x, int y)

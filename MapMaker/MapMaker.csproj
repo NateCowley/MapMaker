@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="ImprovedNoise.cs" />
     <Compile Include="Cartographer.cs" />
+    <Compile Include="QuadPoint.cs" />
     <Compile Include="QuadTree.cs" />
     <Compile Include="WorleyNoise.cs" />
     <Compile Include="NoiseGenerator.cs" />
